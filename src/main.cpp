@@ -39,8 +39,6 @@ namespace {
 
 int main()
 {
-    run<pong::StateMainMenu>();
-    return 0;
     setConsolePosition();
     bool exit = false;
     while (!exit) {

@@ -2,4 +2,105 @@
 /bin
 hopson-arcade/
 
+# This file is used to ignore files which are generated
+# ----------------------------------------------------------------------------
+
+
+# Environments
+build/*
+dist/*
+*.spec
+
+.idea/
+*.qmlc
+
+*~
+*.bak
+*.autosave
+*.a
+*.core
+*.moc
+*.o
+*.obj
+*.orig
+*.rej
+*.so
+*.so.*
+*_pch.h.cpp
+*_resource.rc
+*.qm
+.#*
+*.*#
+core
+!core/
+tags
+.DS_Store
+.directory
+*.debug
+Makefile*
+*.prl
+*.app
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+Thumbs.db
+*.res
+*.rc
+/.qmake.cache
+/.qmake.stash
+*.sh
+
+# xemacs temporary files
+*.flc
+
+# Vim temporary files
+.*.swp
+
+# Visual Studio generated files
+*.ib_pdb_index
+*.idb
+*.ilk
+*.pdb
+*.sln
+*.suo
+*.vcproj
+*vcproj.*.*.user
+*.ncb
+*.sdf
+*.opensdf
+*.vcxproj
+*vcxproj.*
+.vscode/*
+.vs/*
+*.user
+
+# MinGW generated files
+*.Debug
+*.Release
+
+# Python byte code
+*.py[co]
+.pytest_cache*
+
+# Binaries
+# --------
+*.dll
+*.exe
+
+# Data files
+*.h5
+
+CMakeLists.txt.*
+/.metadata
+*html/
+*latex/
+.ipynb_checkpoints/
+
+cmake/FindgRPC.cmake
+
+.cproject
+.project
+.settings/
+prep_debug.sh
+.vscode/launch.json
 .vscode/
