@@ -30,7 +30,7 @@
 #endif
 
 #include "game.h"
-//#include "state_main_menu.h"
+#include "state_main_menu.h"
 #include "pong_state_main_menu.h"
 
 void setConsolePosition() {
@@ -78,7 +78,7 @@ int main() {
 
     switch (option) {
       case 1:
-        //run<StateMainMenu>();
+        run<StateMainMenu>();
         break;
 
       case 2:
