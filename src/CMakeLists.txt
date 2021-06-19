@@ -4,6 +4,8 @@ set(hopson-arcade "${PROJECT_NAME}")
 
 add_subdirectory(arcade)
 add_subdirectory(pong)
+add_subdirectory(space_invaders)
+
 
 add_executable(${PROJECT_NAME} "") 
 
@@ -17,6 +19,7 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         arcade
         pong
+        space_invaders
         pthread
         sfml-audio
         sfml-network
