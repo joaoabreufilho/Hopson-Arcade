@@ -23,37 +23,38 @@
  * GPL-3.0 License
  */
 
-#include <arcade/game.h>
+
 #include <iostream>
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
-#include "pong/states/state_main_menu.h"
-#include "space_invaders/states/state_main_menu.h"
+#include "game.h"
+//#include "state_main_menu.h"
+#include "pong_state_main_menu.h"
 
-namespace {
-  void setConsolePosition() {
+void setConsolePosition() {
 #ifdef _WIN32
-    HWND consoleWindow = GetConsoleWindow();
-    SetWindowPos(consoleWindow, 0, 0, 0, 500, 500, SWP_NOSIZE | SWP_NOZORDER);
+  HWND consoleWindow = GetConsoleWindow();
+  SetWindowPos(consoleWindow, 0, 0, 0, 500, 500, SWP_NOSIZE | SWP_NOZORDER);
 #endif
-  }
+}
 
-  constexpr int GAMES = 2;
+constexpr int GAMES = 2;
 
-  template <typename T>
-  void run() {
-    std::cout << "\nTo choose another Game, simply close the window\n";
-    std::cin.ignore();
-    arcade::Game app{};
-    app.initGame<T>();
-    app.run();
-    std::cout << '\n';
-  }
+template <typename T>
+void run() {
+  std::cout << "\nTo choose another Game, simply close the window\n";
+  std::cin.ignore();
+  Game app{};
+  app.initGame<T>();
+  app.run();
+  std::cout << '\n';
+}
 
-  bool isValidChoice(int option) { return option > 0 && option <= GAMES + 1; }
-}  // namespace
+bool isValidChoice(int option) {
+  return option > 0 && option <= GAMES + 1;
+}
 
 int main() {
   setConsolePosition();
@@ -77,11 +78,11 @@ int main() {
 
     switch (option) {
       case 1:
-        run<space_invaders::StateMainMenu>();
+        //run<StateMainMenu>();
         break;
 
       case 2:
-        run<pong::StateMainMenu>();
+        run<PongStateMainMenu>();
         break;
 
       case GAMES + 1:
