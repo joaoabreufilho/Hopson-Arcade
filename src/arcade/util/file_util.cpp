@@ -5,10 +5,10 @@
 #include <sstream>
 #include <stdexcept>
 
-std::string getFileContent(const std::string& filePath, bool throws) {
-  std::ifstream inFile(filePath);
+std::string getFileContent(const std::string& file_path, bool throws) {
+  std::ifstream inFile(file_path);
   if (!inFile.is_open()) {
-    std::string error = "Unable to open file: " + filePath + "!";
+    std::string error = "Unable to open file: " + file_path + "!";
     if (throws) {
       throw std::runtime_error(error);
     } else {

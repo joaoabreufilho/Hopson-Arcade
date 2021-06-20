@@ -29,6 +29,6 @@ class Projectile : public Collidable {
   sf::Vector2f m_position;
   Type m_type;
   Direction m_direction;
-  bool m_isActive = true;
+  bool m_is_active = true;
   int m_id;
 };

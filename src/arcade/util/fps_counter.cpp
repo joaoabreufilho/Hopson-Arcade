@@ -9,7 +9,7 @@ FPSCounter::FPSCounter() {
   m_text.setOutlineColor(sf::Color::Black);
   m_text.setFillColor({255, 255, 255});
   m_text.setOutlineThickness(2);
-  m_text.setFont(ResourceHolder::get().fonts.get("arcade"));
+  m_text.setFont(ResourceHolder::get().m_fonts.get("arcade"));
   m_text.setCharacterSize(15);
 }
 
@@ -17,10 +17,10 @@ FPSCounter::FPSCounter() {
 void FPSCounter::update() {
   m_frameCount++;
 
-  if (m_delayTimer.getElapsedTime().asSeconds() > 0.2) {
+  if (m_delay_timer.getElapsedTime().asSeconds() > 0.2) {
     m_fps = m_frameCount / m_fpsTimer.restart().asSeconds();
     m_frameCount = 0;
-    m_delayTimer.restart();
+    m_delay_timer.restart();
   }
 }
 

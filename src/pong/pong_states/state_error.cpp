@@ -21,7 +21,7 @@ StateError::StateError(Game& game, const std::string& message)
 }
 
 void StateError::handleEvent(sf::Event e) {
-  m_messageMenu.handleEvent(e, m_pGame->getWindow());
+  m_messageMenu.handleEvent(e, m_game_ptr->getWindow());
 }
 
 void StateError::update([[maybe_unused]] sf::Time deltaTime) {}

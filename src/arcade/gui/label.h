@@ -1,9 +1,32 @@
+/*
+ * Used for Documentation and Educational Purposes.
+ * Public Description: This is a collection of small aracde-y games, created using C++17 and
+ * SFML
+ *
+ * Hopson-Arcade {https://github.com/Hopson97}
+ * GPL License
+ */
+/**
+ * @file button.h
+ * @brief Label gui handler
+ *
+ * - \subpage Subsystem: Arcade GUI
+ *
+ * \date Jun 2021
+ */
+/** @addtogroup arcade_gui */
+/** @{ */
 #pragma once
 
 #include <functional>
 
 #include "widget.h"
 
+/**
+ * @class Label
+ * @brief A class that represents a GUI label.
+ *
+ */
 class Label : public Widget {
  public:
   Label();
@@ -26,3 +49,4 @@ class Label : public Widget {
 inline std::unique_ptr<Label> makeLabel() {
   return std::make_unique<Label>();
 }
+/** @} */

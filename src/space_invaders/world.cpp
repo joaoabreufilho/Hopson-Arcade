@@ -6,12 +6,12 @@ World::World()
                            8,
                            Projectile::WIDTH,
                            Projectile::HEIGHT,
-                           ResourceHolder::get().textures.get("si/projectile")),
+                           ResourceHolder::get().m_textures.get("si/projectile")),
       m_invaders(*this),
       m_ufo(m_rng) {
   m_explodeShape.setSize({52, 28});
   m_explodeShape.setTexture(
-      &ResourceHolder::get().textures.get("si/explosion"));
+      &ResourceHolder::get().m_textures.get("si/explosion"));
 
   const int SECT_SIZE = (kInvaderWidth / 4);
   for (int i = 0; i < 4; i++) {
@@ -19,7 +19,7 @@ World::World()
         float(i * SECT_SIZE + SECT_SIZE / 2 - Shield::SIZE / 2));
   }
 
-  m_playerShoot.setBuffer(ResourceHolder::get().soundBuffers.get("si/shoot"));
+  m_playerShoot.setBuffer(ResourceHolder::get().m_sound_buffers.get("si/shoot"));
   m_playerShoot.setVolume(25);
 }
 

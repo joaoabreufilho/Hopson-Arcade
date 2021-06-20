@@ -15,7 +15,7 @@ InvaderManager::InvaderManager(World& world)
           8,
           Invader::WIDTH,
           Invader::HEIGHT,
-          ResourceHolder::get().textures.get("si/invaders")) {
+          ResourceHolder::get().m_textures.get("si/invaders")) {
   // Layout of the invaders
   Invader::Type types[] = {Invader::Type::Squid, Invader::Type::Crab,
                            Invader::Type::Crab, Invader::Type::Octopus,
@@ -33,11 +33,11 @@ InvaderManager::InvaderManager(World& world)
 
   // load sounds
   for (int i = 0; i < 4; i++) {
-    m_stepSounds[i].setBuffer(ResourceHolder::get().soundBuffers.get(
+    m_stepSounds[i].setBuffer(ResourceHolder::get().m_sound_buffers.get(
         "si/fastinvader" + std::to_string(i + 1)));
   }
   m_invaderKilledSound.setBuffer(
-      ResourceHolder::get().soundBuffers.get("si/invaderkilled"));
+      ResourceHolder::get().m_sound_buffers.get("si/invaderkilled"));
 }
 
 void InvaderManager::tryStepInvaders() {

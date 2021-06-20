@@ -6,6 +6,6 @@ ResourceHolder& ResourceHolder::get() {
 }
 
 ResourceHolder::ResourceHolder()
-    : fonts("fonts", "ttf"),
-      textures("txrs", "png"),
-      soundBuffers("sfx", "ogg") {}
+    : m_fonts("fonts", "ttf"),
+      m_textures("txrs", "png"),
+      m_sound_buffers("sfx", "ogg") {}

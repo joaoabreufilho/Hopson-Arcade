@@ -5,7 +5,7 @@ Widget::Text::Text() {
   setCharacterSize(25);
   setOutlineColor(sf::Color::Black);
   setFillColor(sf::Color::White);
-  setFont(ResourceHolder::get().fonts.get("arcade"));
+  setFont(ResourceHolder::get().m_fonts.get("arcade"));
 }
 
 bool Widget::Rectangle::isRolledOn(const sf::RenderWindow& window) const {

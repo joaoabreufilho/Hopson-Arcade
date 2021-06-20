@@ -58,26 +58,26 @@ void Game::run() {
 // Tries to pop the current game state
 void Game::updateStates() {
   switch (m_action.type) {
-    case Action::Type::Push:
+    case Action::Type::kPush:
       m_states.push_back(std::move(m_action.state));
-      m_action.type = Action::Type::None;
+      m_action.type = Action::Type::kNone;
       break;
 
-    case Action::Type::Pop:
+    case Action::Type::kPop:
       m_states.pop_back();
       if (!m_states.empty()) {
         getCurrentState().onOpen();
       }
-      m_action.type = Action::Type::None;
+      m_action.type = Action::Type::kNone;
       break;
 
-    case Action::Type::Change:
+    case Action::Type::kChange:
       m_states.pop_back();
       m_states.push_back(std::move(m_action.state));
-      m_action.type = Action::Type::None;
+      m_action.type = Action::Type::kNone;
       break;
 
-    case Action::Type::Quit:
+    case Action::Type::kQuit:
       m_states.clear();
       break;
 
@@ -115,11 +115,11 @@ void Game::pushState(std::unique_ptr<StateBase> state) {
 
 // Flags a boolean for the game to pop state
 void Game::popState() {
-  m_action.type = Action::Type::Pop;
+  m_action.type = Action::Type::kPop;
 }
 
 void Game::exitGame() {
-  m_action.type = Action::Type::Quit;
+  m_action.type = Action::Type::kQuit;
 }
 
 // on tin

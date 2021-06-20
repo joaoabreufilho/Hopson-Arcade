@@ -1,13 +1,21 @@
+/*
+ * Used for Documentation and Educational Purposes.
+ * Public Description: This is a collection of small aracde-y games, created
+ * using C++17 and SFML
+ *
+ * Hopson-Arcade {https://github.com/Hopson97}
+ * GPL License
+ */
 /**
  * @file button.h
- * @author Matthew Hopson
- * @brief Class for a button
- * @version 0.1
- * @date 2019-06-03
+ * @brief Single button representation.
  *
- * @copyright Copyright (c) 2019
+ * - \subpage Subsystem: Arcade GUI
  *
+ * \date Jun 2021
  */
+/** @addtogroup arcade_gui */
+/** @{ */
 #pragma once
 
 #include <functional>
@@ -15,14 +23,15 @@
 #include "widget.h"
 
 /**
-    Enum for the size of a button
+    @brief Enum for the size of a button
 */
 enum class ButtonSize {
-  Small,
-  Wide,
+  kSmall,
+  kWide,
 };
 
 /**
+ * @class Button
  * @brief A class that represents a single button
  *
  */
@@ -33,7 +42,7 @@ class Button : public Widget {
    *
    * @param s The size of the button
    */
-  Button(ButtonSize s = ButtonSize::Wide);
+  Button(ButtonSize s = ButtonSize::kWide);
 
   /**
    * @brief Sets a function callback for when the button is pressed
@@ -102,7 +111,7 @@ class Button : public Widget {
   Rectangle m_button;
   Text m_text;
   std::function<void(void)> m_function = []() {};
-  bool m_isDisabled = false;
+  bool m_is_disabled = false;
 };
 
 /**
@@ -114,3 +123,4 @@ class Button : public Widget {
 inline std::unique_ptr<Button> makeButton() {
   return std::make_unique<Button>();
 }
+/** @} */

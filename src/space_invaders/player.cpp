@@ -2,12 +2,12 @@
 #include "display_info.h"
 #include "resource_holder.h"
 
-constexpr float BASE_Y = (float)kInvadersHeight - 40.0f;
+constexpr float kBaseY = (float)kInvadersHeight - 40.0f;
 
 Player::Player() : Collidable(44, 32), m_deathAnimation(11, 8) {
   m_sprite.setSize({44, 32});
-  m_sprite.setPosition({kInvaderWidth / 2, BASE_Y});
-  m_sprite.setTexture(&ResourceHolder::get().textures.get("si/player"));
+  m_sprite.setPosition({kInvaderWidth / 2, kBaseY});
+  m_sprite.setTexture(&ResourceHolder::get().m_textures.get("si/player"));
   m_sprite.setTextureRect({0, 0, 11, 8});
 
   for (int i = 0; i < 20; i++) {
@@ -15,7 +15,7 @@ Player::Player() : Collidable(44, 32), m_deathAnimation(11, 8) {
   }
 
   m_deathSound.setBuffer(
-      ResourceHolder::get().soundBuffers.get("si/explosion"));
+      ResourceHolder::get().m_sound_buffers.get("si/explosion"));
 }
 
 void Player::restart() {
@@ -23,7 +23,7 @@ void Player::restart() {
   m_sprite.setTextureRect({0, 0, 11, 8});
   m_isAlive = true;
   m_livesLeft--;
-  m_sprite.setPosition({kInvaderWidth / 2, BASE_Y});
+  m_sprite.setPosition({kInvaderWidth / 2, kBaseY});
 }
 
 void Player::input() {
@@ -47,10 +47,10 @@ void Player::update(float dt) {
     m_velocity *= 0.95f;
     if (m_sprite.getPosition().x <= 0) {
       m_velocity.x = 1.0f;
-      m_sprite.setPosition(1.0f, BASE_Y);
+      m_sprite.setPosition(1.0f, kBaseY);
     } else if (m_sprite.getPosition().x + w >= kInvaderWidth) {
       m_velocity.x = -1.0f;
-      m_sprite.setPosition(kInvaderWidth - 1.0f - w, BASE_Y);
+      m_sprite.setPosition(kInvaderWidth - 1.0f - w, kBaseY);
     }
   }
 }

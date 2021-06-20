@@ -26,7 +26,7 @@ void Projectile::onCollide([[maybe_unused]] Collidable& other) {
 }
 
 void Projectile::destroy() {
-  m_isActive = false;
+  m_is_active = false;
 }
 
 const sf::Vector2f& Projectile::getPosition() const {
@@ -38,7 +38,7 @@ Projectile::Type Projectile::getType() const {
 }
 
 bool Projectile::isActive() const {
-  return m_isActive;
+  return m_is_active;
 }
 
 Projectile::Direction Projectile::getDirection() const {

@@ -1,8 +1,29 @@
+/*
+ * Used for Documentation and Educational Purposes.
+ * Public Description: This is a collection of small aracde-y games, created
+ * using C++17 and SFML
+ *
+ * Hopson-Arcade {https://github.com/Hopson97}
+ * GPL License
+ */
+/**
+ * @file random.h
+ * @brief Random numbers getter.
+ *
+ * - \subpage Subsystem: Arcade Resources
+ *
+ * \date Jun 2021
+ */
+/** @addtogroup arcade_resources */
+/** @{ */
 #pragma once
 
 #include <ctime>
 #include <random>
-
+/**
+ * @class Random
+ * @brief Template class to get random numbers.
+ */
 template <typename Engine = std::mt19937>
 class Random {
   template <typename T>
@@ -10,7 +31,7 @@ class Random {
   using UniformIntDist = std::uniform_int_distribution<int>;
 
  public:
-  static Random gRand;
+  static Random m_g_rand;
 
   Random(int seed = std::time(nullptr)) : m_prng(seed) {}
 
@@ -36,3 +57,4 @@ class Random {
  private:
   Engine m_prng;
 };
+/** @} */

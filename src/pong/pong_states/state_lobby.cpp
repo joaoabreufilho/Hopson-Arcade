@@ -27,14 +27,14 @@ StateLobby::StateLobby(Game& game, const std::string& name)
   startButton->setFunction([&]() {});
 
   if (!m_server.start(PORT)) {
-    m_pGame->popState();
+    m_game_ptr->popState();
   };
 
   auto exitBtn = makeButton();
   exitBtn->setText("Back");
   exitBtn->setFunction([&]() {
     m_server.stop();
-    m_pGame->popState();
+    m_game_ptr->popState();
   });
 
   m_mainMenu.addWidget(std::move(exitBtn));
@@ -59,7 +59,7 @@ StateLobby::StateLobby(Game& game,
     auto packet = makePacket(ToServerCommand::Disconnect);
     packet << m_playerId;
     m_socket.send(packet);
-    m_pGame->popState();
+    m_game_ptr->popState();
     m_socket.disconnect();
   });
 
@@ -71,7 +71,7 @@ StateLobby::StateLobby(Game& game,
 
 void StateLobby::connectToServer() {
   if (m_socket.connect(sf::IpAddress::LocalHost, PORT) != sf::Socket::Done) {
-    m_pGame->changeState<StateError>(*m_pGame, "Failed to connect to host.");
+    m_game_ptr->changeState<StateError>(*m_game_ptr, "Failed to connect to host.");
   }
   m_socket.setBlocking(false);
   m_isConnected = true;
@@ -86,13 +86,13 @@ void StateLobby::initPlayerList() {
 }
 
 void StateLobby::handleEvent(sf::Event e) {
-  m_mainMenu.handleEvent(e, m_pGame->getWindow());
+  m_mainMenu.handleEvent(e, m_game_ptr->getWindow());
 }
 
 void StateLobby::handlePacket(ToClientCommand command, sf::Packet& packet) {
   switch (command) {
     case ToClientCommand::Disconnect:
-      m_pGame->changeState<StateError>(*m_pGame, "Host has disconnected.");
+      m_game_ptr->changeState<StateError>(*m_game_ptr, "Host has disconnected.");
       m_socket.disconnect();
       break;
 

@@ -11,13 +11,13 @@ UFO::UFO(Random<>& rand)
     : Collidable(WIDTH, HEIGHT), m_rng(rand), m_animation(16, 8) {
   m_sprite.setSize({WIDTH, HEIGHT});
   m_sprite.setPosition((float)kInvaderWidth, Y_POS);
-  m_sprite.setTexture(&ResourceHolder::get().textures.get("si/ufo"));
+  m_sprite.setTexture(&ResourceHolder::get().m_textures.get("si/ufo"));
 
   for (int i = 0; i < 3; i++) {
     m_animation.addFrame(i, sf::seconds(0.2f));
   }
   m_flyingSound.setBuffer(
-      ResourceHolder::get().soundBuffers.get("si/ufo_lowpitch"));
+      ResourceHolder::get().m_sound_buffers.get("si/ufo_lowpitch"));
   m_flyingSound.setVolume(10);
 }
 

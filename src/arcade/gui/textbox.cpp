@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-TextBox::TextBox(std::string& modString) : m_pModString(&modString) {
-  m_text.setString(modString);
+TextBox::TextBox(std::string& mod_string) : m_mod_string_ptr(&mod_string) {
+  m_text.setString(mod_string);
   m_label.setCharacterSize(15);
   m_rect.setFillColor({52, 152, 219});
   m_rect.setSize({256, 64});
@@ -19,7 +19,7 @@ void TextBox::handleEvent(sf::Event e, const sf::RenderWindow& window) {
 }
 
 void TextBox::render(sf::RenderTarget& renderer) {
-  if (!m_isActive) {
+  if (!m_is_active) {
     m_rect.setFillColor({52, 152, 219});
   } else {
     m_rect.setFillColor({82, 132, 239});
@@ -46,18 +46,18 @@ sf::Vector2f TextBox::getSize() const {
 }
 
 void TextBox::handleClick(sf::Event e, const sf::RenderWindow& window) {
-  if (!m_isDisabled) {
+  if (!m_is_disabled) {
     auto pos = sf::Mouse::getPosition(window);
     if (m_rect.getGlobalBounds().contains((float)pos.x, (float)pos.y)) {
       if (e.type == sf::Event::MouseButtonPressed) {
         if (e.mouseButton.button == sf::Mouse::Left) {
-          m_isActive = true;
+          m_is_active = true;
         }
       }
     } else {
       if (e.type == sf::Event::MouseButtonPressed) {
         if (e.mouseButton.button == sf::Mouse::Left) {
-          m_isActive = false;
+          m_is_active = false;
         }
       }
     }
@@ -65,24 +65,24 @@ void TextBox::handleClick(sf::Event e, const sf::RenderWindow& window) {
 }
 
 void TextBox::handleTextInput(sf::Event e) {
-  if (!m_isDisabled) {
+  if (!m_is_disabled) {
     switch (e.type) {
       case sf::Event::TextEntered:
-        if (m_isActive) {
+        if (m_is_active) {
           // Get the key that was entered
-          unsigned char keyCode = e.text.unicode;
+          unsigned char key_code = e.text.unicode;
 
-          if (isValidCharacter(keyCode)) {
+          if (isValidCharacter(key_code)) {
             if (m_text.getGlobalBounds().width + 30 <=
                 m_rect.getGlobalBounds().width) {
-              m_pModString->push_back(keyCode);
+              m_mod_string_ptr->push_back(key_code);
             }
-          } else if (isBackspace(keyCode)) {
+          } else if (isBackspace(key_code)) {
             // prevents popping back an empty string
-            if (m_pModString->length() > 0)
-              m_pModString->pop_back();
+            if (m_mod_string_ptr->length() > 0)
+              m_mod_string_ptr->pop_back();
           }
-          m_text.setString(*m_pModString);
+          m_text.setString(*m_mod_string_ptr);
         }
         break;
 
@@ -92,12 +92,12 @@ void TextBox::handleTextInput(sf::Event e) {
   }
 }
 
-bool TextBox::isValidCharacter(unsigned char keyCode) {
-  return ((keyCode >= 48) && (keyCode <= 57)) ||   // Numbers
-         ((keyCode >= 65) && (keyCode <= 90)) ||   // Uppercase
-         ((keyCode >= 97) && (keyCode <= 122)) ||  // Lowercase
-         keyCode == 32 ||                          // Space
-         keyCode == 46;                            // dot
+bool TextBox::isValidCharacter(unsigned char key_code) {
+  return ((key_code >= 48) && (key_code <= 57)) ||   // Numbers
+         ((key_code >= 65) && (key_code <= 90)) ||   // Uppercase
+         ((key_code >= 97) && (key_code <= 122)) ||  // Lowercase
+         key_code == 32 ||                          // Space
+         key_code == 46;                            // dot
 }
 
 bool TextBox::isBackspace(unsigned char keycode) {
@@ -107,11 +107,11 @@ bool TextBox::isBackspace(unsigned char keycode) {
 void TextBox::disable() {
   m_text.setFillColor({100, 100, 100});
   m_rect.setFillColor({50, 50, 50});
-  m_isDisabled = true;
+  m_is_disabled = true;
 }
 
 void TextBox::enable() {
   m_text.setFillColor(sf::Color::White);
   m_rect.setFillColor(sf::Color::Black);
-  m_isDisabled = false;
+  m_is_disabled = false;
 }

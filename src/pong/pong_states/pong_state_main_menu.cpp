@@ -15,13 +15,13 @@ PongStateMainMenu::PongStateMainMenu(Game& game)
       m_createLobbyMenu(game.getWindow(), HEIGHT / 2 - 100),
       mp_activeMenu(&m_mainMenu) {
   m_banner.setSize({(float)WIDTH, 200});
-  m_banner.setTexture(&ResourceHolder::get().textures.get("pong/logo"));
+  m_banner.setTexture(&ResourceHolder::get().m_textures.get("pong/logo"));
 
   {
     auto vsComputer = makeButton();
     vsComputer->setText("Play Vs Computer");
     // vsComputer->setFunction(
-    //    [&]() { m_pGame->pushState<StateLobby>(*m_pGame); });
+    //    [&]() { m_game_ptr->pushState<StateLobby>(*m_game_ptr); });
 
     auto playBtn = makeButton();
     playBtn->setText("Create Lobby");
@@ -33,7 +33,7 @@ PongStateMainMenu::PongStateMainMenu(Game& game)
 
     auto exitBtn = makeButton();
     exitBtn->setText("Exit game");
-    exitBtn->setFunction([&]() { m_pGame->popState(); });
+    exitBtn->setFunction([&]() { m_game_ptr->popState(); });
 
     m_mainMenu.addWidget(std::move(vsComputer));
     m_mainMenu.addWidget(std::move(playBtn));
@@ -51,7 +51,7 @@ PongStateMainMenu::PongStateMainMenu(Game& game)
       if (m_name.empty()) {
         m_name = "Host";
       }
-      m_pGame->pushState<StateLobby>(*m_pGame, m_name);
+      m_game_ptr->pushState<StateLobby>(*m_game_ptr, m_name);
     });
 
     auto backBtn = makeButton();
@@ -76,7 +76,7 @@ PongStateMainMenu::PongStateMainMenu(Game& game)
       if (m_name.empty()) {
         m_name = "Guest";
       }
-      m_pGame->pushState<StateLobby>(*m_pGame, m_joinIp, m_name);
+      m_game_ptr->pushState<StateLobby>(*m_game_ptr, m_joinIp, m_name);
     });
 
     auto backBtn = makeButton();
@@ -92,7 +92,7 @@ PongStateMainMenu::PongStateMainMenu(Game& game)
 }
 
 void PongStateMainMenu::handleEvent(sf::Event e) {
-  mp_activeMenu->handleEvent(e, m_pGame->getWindow());
+  mp_activeMenu->handleEvent(e, m_game_ptr->getWindow());
 }
 
 void PongStateMainMenu::update(sf::Time deltaTime) {

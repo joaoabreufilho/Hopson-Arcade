@@ -1,13 +1,3 @@
-/**
- * @file Button.cpp
- * @author Matthew Hopson
- * @brief Button class implementation
- * @version 0.1
- * @date 2019-06-03
- *
- * @copyright Copyright (c) 2019
- *
- */
 #include "button.h"
 
 Button::Button(ButtonSize size) {
@@ -15,11 +5,11 @@ Button::Button(ButtonSize size) {
   m_button.setOutlineColor(sf::Color::Green);
   m_button.setFillColor(sf::Color::Black);
   switch (size) {
-    case ButtonSize::Wide:
+    case ButtonSize::kWide:
       m_button.setSize({256, 64});
       break;
 
-    case ButtonSize::Small:
+    case ButtonSize::kSmall:
       m_button.setSize({128, 64});
       break;
   }
@@ -39,7 +29,7 @@ void Button::setTexture(const sf::Texture& tex) {
 }
 
 void Button::handleEvent(sf::Event e, const sf::RenderWindow& window) {
-  if (m_isDisabled) {
+  if (m_is_disabled) {
     return;
   }
   auto pos = sf::Mouse::getPosition(window);
@@ -86,13 +76,13 @@ void Button::updateText() {
 void Button::disable() {
   m_text.setFillColor({100, 100, 100});
   m_button.setFillColor({50, 50, 50});
-  m_isDisabled = true;
+  m_is_disabled = true;
 }
 
 void Button::enable() {
   m_text.setFillColor(sf::Color::White);
   m_button.setFillColor(sf::Color::Black);
-  m_isDisabled = false;
+  m_is_disabled = false;
 }
 
 sf::Vector2f Button::getSize() const {

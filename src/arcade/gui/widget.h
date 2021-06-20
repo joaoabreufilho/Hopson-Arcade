@@ -1,3 +1,21 @@
+/*
+ * Used for Documentation and Educational Purposes.
+ * Public Description: This is a collection of small aracde-y games, created
+ * using C++17 and SFML
+ *
+ * Hopson-Arcade {https://github.com/Hopson97}
+ * GPL License
+ */
+/**
+ * @file widget.h
+ * @brief widget handler
+ *
+ * - \subpage Subsystem: Arcade GUI
+ *
+ * \date Jun 2021
+ */
+/** @addtogroup arcade */
+/** @{ */
 #pragma once
 
 #include <SFML/Graphics.hpp>
@@ -5,6 +23,10 @@
 
 #include "resource_holder.h"
 
+/**
+ * @class Widget
+ * @brief widget handler.
+ */
 class Widget {
  public:
   virtual void handleEvent(sf::Event e, const sf::RenderWindow& window) = 0;
@@ -29,3 +51,4 @@ class Widget {
     bool isClicked(sf::Event, const sf::RenderWindow& window);
   };
 };
+/** @} */

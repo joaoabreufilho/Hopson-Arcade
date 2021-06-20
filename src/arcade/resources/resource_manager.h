@@ -1,11 +1,30 @@
+/*
+ * Used for Documentation and Educational Purposes.
+ * Public Description: This is a collection of small aracde-y games, created
+ * using C++17 and SFML
+ *
+ * Hopson-Arcade {https://github.com/Hopson97}
+ * GPL License
+ */
+/**
+ * @file resource_manager.h
+ * @brief Resource file handler.
+ *
+ * - \subpage Subsystem: Arcade Resources
+ *
+ * \date Jun 2021
+ */
+/** @addtogroup arcade_resources */
+/** @{ */
 #pragma once
 
 #include <string>
 #include <unordered_map>
 
 /**
-    Holds all the resources of the game
-*/
+ * @class ResourceHolder
+ * @brief Holds all the resources of the game
+ */
 template <typename Resource>
 class ResourceManager {
  public:
@@ -48,3 +67,4 @@ class ResourceManager {
 
   std::unordered_map<std::string, Resource> m_resources;
 };
+/** @} */

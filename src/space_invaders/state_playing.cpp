@@ -12,16 +12,16 @@ StatePlaying::StatePlaying(Game& game)
       m_highestScoreDisplay(kInvaderWidth / 2, "HighScore") {
   auto mmButton = std::make_unique<Button>();
   mmButton->setText("Main Menu\n");
-  mmButton->setFunction([&]() { m_pGame->popState(); });
+  mmButton->setFunction([&]() { m_game_ptr->popState(); });
 
   auto submitBtn = std::make_unique<Button>();
   submitBtn->setText("Submit Score");
   submitBtn->setFunction(
-      [&]() { m_pGame->changeState<StateHighscores>(*m_pGame, m_score); });
+      [&]() { m_game_ptr->changeState<StateHighscores>(*m_game_ptr, m_score); });
 
   auto exitButton = std::make_unique<Button>();
   exitButton->setText("Exit game\n");
-  exitButton->setFunction([&]() { m_pGame->exitGame(); });
+  exitButton->setFunction([&]() { m_game_ptr->exitGame(); });
 
   m_gameOverMenu.setTitle("GAME  OVER");
   m_gameOverMenu.addWidget(std::move(mmButton));
@@ -33,7 +33,7 @@ StatePlaying::StatePlaying(Game& game)
 
 void StatePlaying::handleEvent(sf::Event e) {
   if (m_isGameover) {
-    m_gameOverMenu.handleEvent(e, m_pGame->getWindow());
+    m_gameOverMenu.handleEvent(e, m_game_ptr->getWindow());
   }
 }
 
@@ -70,7 +70,7 @@ void StatePlaying::render(sf::RenderTarget& renderer) {
 //     display member functions       ///
 StatePlaying::LifeDisplay::LifeDisplay() {
   m_lifeStamp.setSize({Player::WIDTH / 2, Player::WIDTH / 2});
-  m_lifeStamp.setTexture(&ResourceHolder::get().textures.get("si/player"));
+  m_lifeStamp.setTexture(&ResourceHolder::get().m_textures.get("si/player"));
   m_lifeStamp.setTextureRect({0, 0, 11, 8});
   m_label.setPosition(kInvaderWidth - (Player::WIDTH * 5), 10);
   m_label.setString("LIVES");

@@ -10,20 +10,20 @@ StateMainMenu::StateMainMenu(Game& game)
     : StateBase(game, "Main Menu", kInvaderWidth, kInvadersHeight),
       m_mainMenu(game.getWindow(), kInvadersHeight / 2 - 100) {
   m_banner.setSize({(float)kInvaderWidth, 200});
-  m_banner.setTexture(&ResourceHolder::get().textures.get("si/logo"));
+  m_banner.setTexture(&ResourceHolder::get().m_textures.get("si/logo"));
 
   auto playBtn = makeButton();
   playBtn->setText("Play game");
-  playBtn->setFunction([&]() { m_pGame->pushState<StatePlaying>(*m_pGame); });
+  playBtn->setFunction([&]() { m_game_ptr->pushState<StatePlaying>(*m_game_ptr); });
 
   auto highscoresBtn = makeButton();
   highscoresBtn->setText("Highscores");
   highscoresBtn->setFunction(
-      [&]() { m_pGame->pushState<StateHighscores>(*m_pGame); });
+      [&]() { m_game_ptr->pushState<StateHighscores>(*m_game_ptr); });
 
   auto exitBtn = makeButton();
   exitBtn->setText("Exit game");
-  exitBtn->setFunction([&]() { m_pGame->popState(); });
+  exitBtn->setFunction([&]() { m_game_ptr->popState(); });
 
   m_mainMenu.addWidget(std::move(playBtn));
   m_mainMenu.addWidget(std::move(highscoresBtn));
@@ -32,7 +32,7 @@ StateMainMenu::StateMainMenu(Game& game)
 }
 
 void StateMainMenu::handleEvent(sf::Event e) {
-  m_mainMenu.handleEvent(e, m_pGame->getWindow());
+  m_mainMenu.handleEvent(e, m_game_ptr->getWindow());
 }
 
 void StateMainMenu::update(sf::Time deltaTime) {

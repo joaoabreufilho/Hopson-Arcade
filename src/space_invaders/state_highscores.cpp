@@ -28,12 +28,12 @@ StateHighscores::StateHighscores(Game& game)
   m_pActiveMenu = &m_highscoreMenu;
   m_banner.setSize({(float)kInvaderWidth, 200});
   m_banner.setTexture(
-      &ResourceHolder::get().textures.get("si/highscores"));
+      &ResourceHolder::get().m_textures.get("si/highscores"));
   createHighscoreView();
 }
 
 void StateHighscores::handleEvent(sf::Event e) {
-  m_pActiveMenu->handleEvent(e, m_pGame->getWindow());
+  m_pActiveMenu->handleEvent(e, m_game_ptr->getWindow());
 }
 
 void StateHighscores::update(sf::Time deltaTime) {
@@ -68,7 +68,7 @@ void StateHighscores::initViewMenu() {
 
   auto backBtn = makeButton();
   backBtn->setText("Main Menu");
-  backBtn->setFunction([&]() { m_pGame->popState(); });
+  backBtn->setFunction([&]() { m_game_ptr->popState(); });
   m_highscoreMenu.addWidget(std::move(backBtn));
 }
 
