@@ -45,5 +45,5 @@ struct PongPlayer {
   PongPlayerDirection direction;
 };
 
-using PongClientPlayerList = std::array<PongPlayer, MAX_CONNECTS>;
+using PongClientPlayerList = std::array<PongPlayer, kMaxConnects>;
 /** @} */

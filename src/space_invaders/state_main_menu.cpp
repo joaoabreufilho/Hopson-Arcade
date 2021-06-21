@@ -8,7 +8,7 @@
 
 StateMainMenu::StateMainMenu(Game& game)
     : StateBase(game, "Main Menu", kInvaderWidth, kInvadersHeight),
-      m_mainMenu(game.getWindow(), kInvadersHeight / 2 - 100) {
+      m_main_menu(game.getWindow(), kInvadersHeight / 2 - 100) {
   m_banner.setSize({(float)kInvaderWidth, 200});
   m_banner.setTexture(&ResourceHolder::get().m_textures.get("si/logo"));
 
@@ -25,14 +25,14 @@ StateMainMenu::StateMainMenu(Game& game)
   exitBtn->setText("Exit game");
   exitBtn->setFunction([&]() { m_game_ptr->popState(); });
 
-  m_mainMenu.addWidget(std::move(playBtn));
-  m_mainMenu.addWidget(std::move(highscoresBtn));
-  m_mainMenu.addWidget(std::move(exitBtn));
-  m_mainMenu.setTitle("Choose Action");
+  m_main_menu.addWidget(std::move(playBtn));
+  m_main_menu.addWidget(std::move(highscoresBtn));
+  m_main_menu.addWidget(std::move(exitBtn));
+  m_main_menu.setTitle("Choose Action");
 }
 
 void StateMainMenu::handleEvent(sf::Event e) {
-  m_mainMenu.handleEvent(e, m_game_ptr->getWindow());
+  m_main_menu.handleEvent(e, m_game_ptr->getWindow());
 }
 
 void StateMainMenu::update(sf::Time deltaTime) {
@@ -41,6 +41,6 @@ void StateMainMenu::update(sf::Time deltaTime) {
 
 void StateMainMenu::render(sf::RenderTarget& renderer) {
   m_background.draw(renderer);
-  m_mainMenu.render(renderer);
+  m_main_menu.render(renderer);
   renderer.draw(m_banner);
 }

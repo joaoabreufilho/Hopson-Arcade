@@ -37,7 +37,7 @@ class StateLobby : public StateBase {
 
   void handleEvent(sf::Event e) override;
   void handleInput() override{};
-  void update(sf::Time deltaTime) override;
+  void update(sf::Time delta_time) override;
   void render(sf::RenderTarget& renderer) override;
 
  private:
@@ -51,21 +51,21 @@ class StateLobby : public StateBase {
   PongServer m_server;
   sf::TcpSocket m_socket;
 
-  StackMenu m_mainMenu;
-  StackMenu m_playerList;
+  StackMenu m_main_menu;
+  StackMenu m_player_list;
 
-  Widget* m_startGameButton = nullptr;
+  Widget* m_start_game_button_ptr = nullptr;
 
-  std::array<Label*, MAX_CONNECTS> m_playerNameLabels;
+  std::array<Label*, kMaxConnects> m_player_name_labels;
 
-  bool m_isHost;
-  bool m_isConnected = false;
+  bool m_is_host;
+  bool m_is_connected = false;
 
   std::string m_name;
-  sf::IpAddress m_hostIp;
+  sf::IpAddress m_host_ip;
 
-  sf::Uint8 m_playerId;
+  sf::Uint8 m_player_id;
 
-  int m_peerConnections = 0;
+  int m_peer_connections = 0;
 };
 /** @} */

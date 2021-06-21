@@ -7,9 +7,9 @@
 
 StatePlaying::StatePlaying(Game& game)
     : StateBase(game, "Playing the game"),
-      m_gameOverMenu(game.getWindow(), kInvadersHeight / 3),
-      m_scoreDisplay(kInvaderWidth / 8, "Score"),
-      m_highestScoreDisplay(kInvaderWidth / 2, "HighScore") {
+      m_game_over_menu(game.getWindow(), kInvadersHeight / 3),
+      m_score_display(kInvaderWidth / 8, "Score"),
+      m_highest_score_display(kInvaderWidth / 2, "HighScore") {
   auto mmButton = std::make_unique<Button>();
   mmButton->setText("Main Menu\n");
   mmButton->setFunction([&]() { m_game_ptr->popState(); });
@@ -23,17 +23,17 @@ StatePlaying::StatePlaying(Game& game)
   exitButton->setText("Exit game\n");
   exitButton->setFunction([&]() { m_game_ptr->exitGame(); });
 
-  m_gameOverMenu.setTitle("GAME  OVER");
-  m_gameOverMenu.addWidget(std::move(mmButton));
-  m_gameOverMenu.addWidget(std::move(submitBtn));
-  m_gameOverMenu.addWidget(std::move(exitButton));
+  m_game_over_menu.setTitle("GAME  OVER");
+  m_game_over_menu.addWidget(std::move(mmButton));
+  m_game_over_menu.addWidget(std::move(submitBtn));
+  m_game_over_menu.addWidget(std::move(exitButton));
 
-  m_highestScoreDisplay.update(StateHighscores::getHighestScore());
+  m_highest_score_display.update(StateHighscores::getHighestScore());
 }
 
 void StatePlaying::handleEvent(sf::Event e) {
-  if (m_isGameover) {
-    m_gameOverMenu.handleEvent(e, m_game_ptr->getWindow());
+  if (m_is_gameover) {
+    m_game_over_menu.handleEvent(e, m_game_ptr->getWindow());
   }
 }
 
@@ -42,37 +42,37 @@ void StatePlaying::handleInput() {
 }
 
 void StatePlaying::update(sf::Time deltaTime) {
-  if (!m_isGameover) {
+  if (!m_is_gameover) {
     m_score += m_world.update(deltaTime.asSeconds());
-    m_scoreDisplay.update(m_score);
+    m_score_display.update(m_score);
 
-    if (m_score > m_highestScoreDisplay.getCurrentScoreDisplayed()) {
-      m_highestScoreDisplay.update(m_score);
+    if (m_score > m_highest_score_display.getCurrentScoreDisplayed()) {
+      m_highest_score_display.update(m_score);
     }
   }
 
-  m_isGameover = m_world.isGameOver();
+  m_is_gameover = m_world.isGameOver();
 }
 
 void StatePlaying::render(sf::RenderTarget& renderer) {
   m_world.draw(renderer);
 
-  m_lifeDisplay.draw(renderer, m_world.getPlayer().getLives());
-  m_scoreDisplay.draw(renderer);
-  m_highestScoreDisplay.draw(renderer);
+  m_life_display.draw(renderer, m_world.getPlayer().getLives());
+  m_score_display.draw(renderer);
+  m_highest_score_display.draw(renderer);
 
-  if (m_isGameover) {
-    m_gameOverMenu.render(renderer);
+  if (m_is_gameover) {
+    m_game_over_menu.render(renderer);
   }
 }
 
 ///////////////////////////////////////////////
 //     display member functions       ///
 StatePlaying::LifeDisplay::LifeDisplay() {
-  m_lifeStamp.setSize({Player::WIDTH / 2, Player::WIDTH / 2});
-  m_lifeStamp.setTexture(&ResourceHolder::get().m_textures.get("si/player"));
-  m_lifeStamp.setTextureRect({0, 0, 11, 8});
-  m_label.setPosition(kInvaderWidth - (Player::WIDTH * 5), 10);
+  m_life_stamp.setSize({Player::kWidth / 2, Player::kWidth / 2});
+  m_life_stamp.setTexture(&ResourceHolder::get().m_textures.get("si/player"));
+  m_life_stamp.setTextureRect({0, 0, 11, 8});
+  m_label.setPosition(kInvaderWidth - (Player::kWidth * 5), 10);
   m_label.setString("LIVES");
   m_label.setOutlineThickness(0);
 }
@@ -85,8 +85,8 @@ void StatePlaying::LifeDisplay::draw(sf::RenderTarget& window, int lives) {
 
   window.draw(m_label);
   for (int i = 0; i < lives; i++) {
-    m_lifeStamp.setPosition(xOrigin + i * Player::WIDTH / 2 + i * 10, yOrigin);
-    window.draw(m_lifeStamp);
+    m_life_stamp.setPosition(xOrigin + i * Player::kWidth / 2 + i * 10, yOrigin);
+    window.draw(m_life_stamp);
   }
 }
 

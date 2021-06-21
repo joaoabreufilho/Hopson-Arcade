@@ -1,3 +1,21 @@
+/*
+ * Used for Documentation and Educational Purposes.
+ * Public Description: This is a collection of small aracde-y games, created
+ * using C++17 and SFML
+ *
+ * Hopson-Arcade {https://github.com/Hopson97}
+ * GPL License
+ */
+/**
+ * @file player.h
+ * @brief Player representation.
+ *
+ * - \subpage Subsystem: Space Invaders Entity
+ *
+ * \date Jun 2021
+ */
+/** @addtogroup space_invaders_entity */
+/** @{ */
 #pragma once
 
 #include <SFML/Graphics.hpp>
@@ -9,12 +27,13 @@
 #include "animation.h"
 
 /**
-    Represents the player
-*/
+ * @class Player
+ * @brief Represents the player.
+ */
 class Player : public Collidable {
  public:
-  constexpr static int WIDTH = 44;
-  constexpr static int HEIGHT = 32;
+  constexpr static int kWidth = 44;
+  constexpr static int kHeight = 32;
 
   Player();
 
@@ -46,3 +65,4 @@ class Player : public Collidable {
 
   sf::Sound m_deathSound;
 };
+/** @} */

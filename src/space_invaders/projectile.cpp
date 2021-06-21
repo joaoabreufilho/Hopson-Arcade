@@ -5,7 +5,7 @@
 Projectile::Projectile(const sf::Vector2f& position,
                        Type type,
                        Direction direction)
-    : Collidable(WIDTH / 1.5, HEIGHT),
+    : Collidable(kWidth / 1.5, kHeight),
       m_position(position),
       m_type(type),
       m_direction(direction) {

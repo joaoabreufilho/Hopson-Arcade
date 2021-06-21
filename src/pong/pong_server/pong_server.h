@@ -43,10 +43,10 @@ struct Connection {
 class PongServer {
  public:
   enum class State {
-    Lobby,
-    InGame,
+    kLobby,
+    kInGame,
   };
-  State state = State::Lobby;
+  State state = State::kLobby;
 
   bool start(uint16_t port);
   void stop();
@@ -57,9 +57,9 @@ class PongServer {
   void handlePacket(ToServerCommand command, sf::Packet& packet);
   void broadcast(sf::Packet& packet);
 
-  std::array<Connection, MAX_CONNECTS> m_connections;
-  sf::TcpListener m_tcpListener;
+  std::array<Connection, kMaxConnects> m_connections;
+  sf::TcpListener m_tcp_listener;
 
-  int m_currentConnections = 0;
+  int m_current_connections = 0;
 };
 /** @} */

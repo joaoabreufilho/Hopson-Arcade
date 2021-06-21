@@ -2,25 +2,25 @@
 #include "resource_holder.h"
 
 World::World()
-    : m_projectileRenderer(4,
+    : m_projectile_renderer(4,
                            8,
-                           Projectile::WIDTH,
-                           Projectile::HEIGHT,
+                           Projectile::kWidth,
+                           Projectile::kHeight,
                            ResourceHolder::get().m_textures.get("si/projectile")),
       m_invaders(*this),
       m_ufo(m_rng) {
-  m_explodeShape.setSize({52, 28});
-  m_explodeShape.setTexture(
+  m_explode_shape.setSize({52, 28});
+  m_explode_shape.setTexture(
       &ResourceHolder::get().m_textures.get("si/explosion"));
 
-  const int SECT_SIZE = (kInvaderWidth / 4);
+  const int kSectSize = (kInvaderWidth / 4);
   for (int i = 0; i < 4; i++) {
     m_shields.emplace_back(
-        float(i * SECT_SIZE + SECT_SIZE / 2 - Shield::SIZE / 2));
+        float(i * kSectSize + kSectSize / 2 - Shield::kSize / 2));
   }
 
-  m_playerShoot.setBuffer(ResourceHolder::get().m_sound_buffers.get("si/shoot"));
-  m_playerShoot.setVolume(25);
+  m_player_shoot.setBuffer(ResourceHolder::get().m_sound_buffers.get("si/shoot"));
+  m_player_shoot.setVolume(25);
 }
 
 void World::input() {
@@ -74,32 +74,32 @@ const Player& World::getPlayer() const {
 }
 
 bool World::isGameOver() const {
-  return m_player.getLives() == -1 || m_isGameOver;
+  return m_player.getLives() == -1 || m_is_game_over;
 }
 
 // TODO GENERALISE THESE TWO FUNCTIONS VV
 void World::playerProjectileInput() {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) &&
-      m_playerShotClock.getElapsedTime().asSeconds() > 0.5f) {
+      m_player_shot_clock.getElapsedTime().asSeconds() > 0.5f) {
     auto point = m_player.getGunPosition();
-    point.y -= Projectile::HEIGHT;
-    point.x -= Projectile::WIDTH / 2.0f;
-    m_projectiles.emplace_back(point, Projectile::Type::Rectangle,
-                               Projectile::Direction::Up);
-    m_playerShotClock.restart();
-    m_playerShoot.play();
+    point.y -= Projectile::kHeight;
+    point.x -= Projectile::kWidth / 2.0f;
+    m_projectiles.emplace_back(point, Projectile::Type::kRectangle,
+                               Projectile::Direction::kUp);
+    m_player_shot_clock.restart();
+    m_player_shoot.play();
   }
 }
 
 void World::enemyProjectileFire() {
-  if (m_invaderShotClock.getElapsedTime().asSeconds() >= 0.1 &&
+  if (m_invader_shot_clock.getElapsedTime().asSeconds() >= 0.1 &&
       m_rng.getIntInRange(0, 30) == 2) {
     auto point = m_invaders.getRandomLowestInvaderPoint(m_rng);
     if ((int)point.x == -1)
       return;
     auto type = static_cast<Projectile::Type>(m_rng.getIntInRange(1, 2));
-    m_projectiles.emplace_back(point, type, Projectile::Direction::Down);
-    m_invaderShotClock.restart();
+    m_projectiles.emplace_back(point, type, Projectile::Direction::kDown);
+    m_invader_shot_clock.restart();
   }
 }
 // end of to-do
@@ -156,9 +156,9 @@ void World::updateProjectiles(float dt,
 }
 
 void World::draw(sf::RenderTarget& target) {
-  if (m_animTimer.getElapsedTime().asSeconds() > 0.2) {
-    m_projectileRenderer.nextFrame();
-    m_animTimer.restart();
+  if (m_anim_timer.getElapsedTime().asSeconds() > 0.2) {
+    m_projectile_renderer.nextFrame();
+    m_anim_timer.restart();
   }
 
   for (auto& shield : m_shields) {
@@ -166,13 +166,13 @@ void World::draw(sf::RenderTarget& target) {
   }
 
   for (auto& proj : m_projectiles) {
-    m_projectileRenderer.renderEntity(target, (int)proj.getType(),
+    m_projectile_renderer.renderEntity(target, (int)proj.getType(),
                                       proj.getPosition());
   }
 
   for (auto& exp : m_explosions) {
-    m_explodeShape.setPosition(exp.getPosition());
-    target.draw(m_explodeShape);
+    m_explode_shape.setPosition(exp.getPosition());
+    target.draw(m_explode_shape);
   }
 
   m_invaders.drawInvaders(target);

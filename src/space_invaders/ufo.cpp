@@ -3,22 +3,22 @@
 #include "display_info.h"
 #include "resource_holder.h"
 
-constexpr float WIDTH = 72;
-constexpr float HEIGHT = 36;
+constexpr float kWidth = 72;
+constexpr float kHeight = 36;
 constexpr float Y_POS = 45;
 
 UFO::UFO(Random<>& rand)
-    : Collidable(WIDTH, HEIGHT), m_rng(rand), m_animation(16, 8) {
-  m_sprite.setSize({WIDTH, HEIGHT});
+    : Collidable(kWidth, kHeight), m_rng(rand), m_animation(16, 8) {
+  m_sprite.setSize({kWidth, kHeight});
   m_sprite.setPosition((float)kInvaderWidth, Y_POS);
   m_sprite.setTexture(&ResourceHolder::get().m_textures.get("si/ufo"));
 
   for (int i = 0; i < 3; i++) {
     m_animation.addFrame(i, sf::seconds(0.2f));
   }
-  m_flyingSound.setBuffer(
+  m_flying_sound.setBuffer(
       ResourceHolder::get().m_sound_buffers.get("si/ufo_lowpitch"));
-  m_flyingSound.setVolume(10);
+  m_flying_sound.setVolume(10);
 }
 
 UFO::State UFO::getState() const {
@@ -27,30 +27,30 @@ UFO::State UFO::getState() const {
 
 void UFO::update(float dt) {
   switch (m_state) {
-    case State::Destroyed:
-      m_state = State::Waiting;
+    case State::kDestroyed:
+      m_state = State::kWaiting;
       break;
 
-    case State::Flying:
+    case State::kFlying:
       m_sprite.move(m_vx * dt, 0);
-      if (getPosition().x <= -WIDTH ||
-          getPosition().x >= kInvaderWidth + WIDTH) {
-        m_state = State::Waiting;
+      if (getPosition().x <= -kWidth ||
+          getPosition().x >= kInvaderWidth + kWidth) {
+        m_state = State::kWaiting;
       }
-      if ((int)m_flyingSound.getStatus() != (int)sf::Sound::Status::Playing ||
-          m_flyingSound.getPlayingOffset() >= sf::seconds(1.5)) {
-        m_flyingSound.setPlayingOffset(sf::seconds(0.2f));
-        m_flyingSound.play();
+      if ((int)m_flying_sound.getStatus() != (int)sf::Sound::Status::Playing ||
+          m_flying_sound.getPlayingOffset() >= sf::seconds(1.5)) {
+        m_flying_sound.setPlayingOffset(sf::seconds(0.2f));
+        m_flying_sound.play();
       }
       break;
 
-    case State::Waiting:
+    case State::kWaiting:
       if (m_rng.getIntInRange(1, 250) == 100) {
-        m_state = State::Flying;
+        m_state = State::kFlying;
         m_vx = (float)m_rng.getIntInRange(-1, 1) * 200.0f;
         float xPos;
         if (m_vx >= 0) {
-          xPos = -WIDTH;
+          xPos = -kWidth;
         } else {
           xPos = kInvaderWidth;
         }
@@ -61,7 +61,7 @@ void UFO::update(float dt) {
 }
 
 void UFO::draw(sf::RenderTarget& window) {
-  if (m_state == State::Flying) {
+  if (m_state == State::kFlying) {
     m_sprite.setTextureRect(m_animation.getFrame());
     window.draw(m_sprite);
   }
@@ -72,7 +72,7 @@ const sf::Vector2f& UFO::getPosition() const {
 }
 
 void UFO::onCollide([[maybe_unused]] Collidable& other) {
-  m_state = State::Destroyed;
+  m_state = State::kDestroyed;
   m_sprite.setPosition(
       -1000,
       0);  // Move offscreen so it cannot be collided with projectiles

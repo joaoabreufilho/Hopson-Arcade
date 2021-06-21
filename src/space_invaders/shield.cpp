@@ -7,24 +7,24 @@
 #include <iostream>
 
 Shield::Shield(float x)
-    : Collidable((float)SIZE, (float)SIZE),
+    : Collidable((float)kSize, (float)kSize),
       m_position(x, kInvadersHeight - 200) {
   using Sty = SectorStyle;
   for (float sy = 0; sy < 4; sy++) {
     for (float sx = 0; sx < 4; sx++) {
-      Sty style = Sty::Square;
+      Sty style = Sty::kSquare;
       int xP = (int)sx;
       int yP = (int)sy;
       if (xP == 0 && yP == 0)
-        style = Sty::SlopeUp;
+        style = Sty::kSlopeUp;
       if (xP == 3 && yP == 0)
-        style = Sty::SlopeDown;
+        style = Sty::kSlopeDown;
       if (xP == 1 && yP == 3)
-        style = Sty::SlopeUnderUp;
+        style = Sty::kSlopeUnderUp;
       if (xP == 2 && yP == 3)
-        style = Sty::SlopeUnderDown;
+        style = Sty::kSlopeUnderDown;
 
-      m_sections.emplace_back(x + sx * SECT_SIZE, m_position.y + sy * SECT_SIZE,
+      m_sections.emplace_back(x + sx * kSectSize, m_position.y + sy * kSectSize,
                               style);
     }
   }
@@ -46,12 +46,12 @@ Shield::ShieldSection& Shield::getSection(int x, int y) {
 
 void Shield::destroyPoint(float relX, float relY) {
   // Test for out of bounds
-  if (relX < 0 || relX >= SIZE || relY < 0 || relY >= SIZE)
+  if (relX < 0 || relX >= kSize || relY < 0 || relY >= kSize)
     return;
 
   // Get section this is inside of
-  int xIndex = (int)relX / SECT_SIZE;
-  int yIndex = (int)relY / SECT_SIZE;
+  int xIndex = (int)relX / kSectSize;
+  int yIndex = (int)relY / kSectSize;
   auto& section = getSection(xIndex, yIndex);
   auto& sectionPos = section.getPosition();
 
@@ -103,9 +103,9 @@ bool Shield::isTouching(const Projectile& projectile) {
 }
 
 Shield::ShieldSection::ShieldSection(float tlX, float tlY, SectorStyle style)
-    : Collidable((float)SECT_SIZE, (float)SECT_SIZE), m_position({tlX, tlY}) {
-  for (float y = 0; y < SECT_SIZE; y++) {
-    for (float x = 0; x < SECT_SIZE; x++) {
+    : Collidable((float)kSectSize, (float)kSectSize), m_position({tlX, tlY}) {
+  for (float y = 0; y < kSectSize; y++) {
+    for (float x = 0; x < kSectSize; x++) {
       sf::Vertex pixel;
       pixel.color = sf::Color::Green;
       pixel.position = {x + tlX, y + tlY};
@@ -137,9 +137,9 @@ void Shield::ShieldSection::destroyArea(int x, int y) {
     for (int oX = -2; oX <= 2; oX++) {
       int newX = x + oX;
       int newY = y + oY;
-      if (newX < 0 || newX >= SECT_SIZE || newY < 0 || newY >= SECT_SIZE)
+      if (newX < 0 || newX >= kSectSize || newY < 0 || newY >= kSectSize)
         continue;
-      m_pixels[newY * SECT_SIZE + newX].color = sf::Color::Black;
+      m_pixels[newY * kSectSize + newX].color = sf::Color::Black;
     }
   }
 }
@@ -149,31 +149,31 @@ void Shield::ShieldSection::calculatePixelCoord(int x,
                                                 sf::Vertex& pixel,
                                                 SectorStyle style) {
   switch (style) {
-    case SectorStyle::Square:
-      m_pixels[y * SECT_SIZE + x] = pixel;
+    case SectorStyle::kSquare:
+      m_pixels[y * kSectSize + x] = pixel;
       break;
 
-    case SectorStyle::SlopeUp:
-      if (SECT_SIZE - y < x) {
-        m_pixels[y * SECT_SIZE + x] = pixel;
+    case SectorStyle::kSlopeUp:
+      if (kSectSize - y < x) {
+        m_pixels[y * kSectSize + x] = pixel;
       }
       break;
 
-    case SectorStyle::SlopeDown:
+    case SectorStyle::kSlopeDown:
       if (x < y) {
-        m_pixels[y * SECT_SIZE + x] = pixel;
+        m_pixels[y * kSectSize + x] = pixel;
       }
       break;
 
-    case SectorStyle::SlopeUnderUp:
-      if (SECT_SIZE - x > y) {
-        m_pixels[y * SECT_SIZE + x] = pixel;
+    case SectorStyle::kSlopeUnderUp:
+      if (kSectSize - x > y) {
+        m_pixels[y * kSectSize + x] = pixel;
       }
       break;
 
-    case SectorStyle::SlopeUnderDown:
+    case SectorStyle::kSlopeUnderDown:
       if (x > y) {
-        m_pixels[y * SECT_SIZE + x] = pixel;
+        m_pixels[y * kSectSize + x] = pixel;
       }
       break;
   }

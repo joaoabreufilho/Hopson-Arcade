@@ -35,13 +35,13 @@ class PongStateMainMenu : public StateBase {
   void render(sf::RenderTarget& renderer) override;
 
  private:
-  StackMenu m_mainMenu;
-  StackMenu m_joinMenu;
-  StackMenu m_createLobbyMenu;
-  StackMenu* mp_activeMenu = nullptr;
+  StackMenu m_main_menu;
+  StackMenu m_join_menu;
+  StackMenu m_create_lobby_menu;
+  StackMenu* m_active_menu_ptr = nullptr;
   sf::RectangleShape m_banner;
 
-  std::string m_joinIp = "192.168.0.19";
+  std::string m_join_ip = "192.168.0.19";
   std::string m_name;
 };
 /** @} */

@@ -21,15 +21,15 @@
 #include <SFML/Network/Packet.hpp>
 #include <array>
 
-const uint16_t PORT = 52324;
-const int MAX_CONNECTS = 4;
+const uint16_t kPort = 52324;
+const int kMaxConnects = 4;
 
 /**
  * @brief Command to server.
  */
 enum class ToServerCommand : sf::Uint8 {
-  Disconnect,
-  Name,
+  kDisconnect,
+  kName,
 };
 
 /**
@@ -37,21 +37,17 @@ enum class ToServerCommand : sf::Uint8 {
  */
 enum class ToClientCommand : sf::Uint8 {
   // Just the enum
-  Disconnect,
-
+  kDisconnect,
   // u8: player id
-  PlayerId,
-
+  kPlayerId,
   // u8: player id
   // string: name
-  PlayerConnected,
-
+  kPlayerConnected,
   // u8: player id
-  PlayerDisconnected,
-
+  kPlayerDisconnected,
   // u8: count
   // <u8, sting>[count]: id, name
-  PlayerList
+  kPlayerList
 };
 
 /**

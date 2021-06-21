@@ -33,10 +33,10 @@ class StateError : public StateBase {
 
   void handleEvent(sf::Event e) override;
   void handleInput() override{};
-  void update(sf::Time deltaTime) override;
+  void update(sf::Time delta_time) override;
   void render(sf::RenderTarget& renderer) override;
 
  private:
-  StackMenu m_messageMenu;
+  StackMenu m_message_menu;
 };
 /** @} */

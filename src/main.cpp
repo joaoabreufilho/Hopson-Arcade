@@ -40,7 +40,7 @@ void setConsolePosition() {
 #endif
 }
 
-constexpr int GAMES = 2;
+constexpr int kGames = 2;
 
 template <typename T>
 void run() {
@@ -53,7 +53,7 @@ void run() {
 }
 
 bool isValidChoice(int option) {
-  return option > 0 && option <= GAMES + 1;
+  return option > 0 && option <= kGames + 1;
 }
 
 int main() {
@@ -64,14 +64,14 @@ int main() {
     std::cout << "Which Game would you like to play?\n"
               << "1. Space Invaders\n"
               << "2. Pong\n"
-              << GAMES + 1 << ". Exit\n";
+              << kGames + 1 << ". Exit\n";
 
     while (!isValidChoice(option)) {
       std::cin >> option;
 
       if (!isValidChoice(option)) {
         std::cout << "Invalid option, please pick a number between 1 and "
-                  << GAMES + 1 << "\n";
+                  << kGames + 1 << "\n";
         std::cin.ignore();
       }
     }
@@ -85,7 +85,7 @@ int main() {
         run<PongStateMainMenu>();
         break;
 
-      case GAMES + 1:
+      case kGames + 1:
         exit = true;
         break;
 

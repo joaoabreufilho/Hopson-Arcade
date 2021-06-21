@@ -13,20 +13,20 @@ InvaderManager::InvaderManager(World& world)
       m_invaderRenderer(
           12,
           8,
-          Invader::WIDTH,
-          Invader::HEIGHT,
+          Invader::kWidth,
+          Invader::kHeight,
           ResourceHolder::get().m_textures.get("si/invaders")) {
   // Layout of the invaders
-  Invader::Type types[] = {Invader::Type::Squid, Invader::Type::Crab,
-                           Invader::Type::Crab, Invader::Type::Octopus,
-                           Invader::Type::Octopus};
+  Invader::Type types[] = {Invader::Type::kSquid, Invader::Type::kCrab,
+                           Invader::Type::kCrab, Invader::Type::kOctopus,
+                           Invader::Type::kOctopus};
   // Add invaders into the std::vector
   const int GAP = 10;
   for (int y = 0; y < 5; y++) {
     for (int x = 0; x < 11; x++) {
       // calcuate position for invader
-      float invaderX = x * Invader::WIDTH + (GAP * x * 3) + Invader::WIDTH;
-      float invaderY = y * Invader::HEIGHT + (GAP * y) + Invader::HEIGHT * 4;
+      float invaderX = x * Invader::kWidth + (GAP * x * 3) + Invader::kWidth;
+      float invaderY = y * Invader::kHeight + (GAP * y) + Invader::kHeight * 4;
       m_invaders.emplace_back(sf::Vector2f{invaderX, invaderY}, types[y]);
     }
   }
@@ -58,7 +58,7 @@ void InvaderManager::tryStepInvaders() {
         continue;
       invader.move(step, 0.0f);
       if (m_moveDown) {
-        invader.move(0, Invader::HEIGHT / 2.0f);
+        invader.move(0, Invader::kHeight / 2.0f);
       } else if (!moveDown) {
         // Check invader position to see if all should move down
         moveDown = testInvaderPosition(invader);
@@ -116,8 +116,8 @@ sf::Vector2f InvaderManager::getRandomLowestInvaderPoint(
       auto& invader = m_invaders.at(index);
       if (invader.isAlive()) {
         return {// transform to below the invader's center
-                invader.getPosition().x + Invader::WIDTH / 2,
-                invader.getPosition().y + Invader::HEIGHT + 5};
+                invader.getPosition().x + Invader::kWidth / 2,
+                invader.getPosition().y + Invader::kHeight + 5};
       }
     }
   }
@@ -163,6 +163,6 @@ bool InvaderManager::testInvaderPosition(const Invader& invader) const {
   }
   return (invader.getPosition().x < 15 &&
           m_isMovingLeft) ||  // Check invader left
-         (invader.getPosition().x + Invader::WIDTH > kInvaderWidth - 15 &&
+         (invader.getPosition().x + Invader::kWidth > kInvaderWidth - 15 &&
           !m_isMovingLeft);  // Check invader right
 }

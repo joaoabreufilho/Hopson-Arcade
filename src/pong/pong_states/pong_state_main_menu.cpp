@@ -5,16 +5,16 @@
 #include "state_lobby.h"
 #include "textbox.h"
 
-constexpr unsigned WIDTH = 800;
-constexpr unsigned HEIGHT = 600;
+constexpr unsigned kWidth = 800;
+constexpr unsigned kHeight = 600;
 
 PongStateMainMenu::PongStateMainMenu(Game& game)
-    : StateBase(game, "Main Menu", WIDTH, HEIGHT),
-      m_mainMenu(game.getWindow(), HEIGHT / 2 - 100),
-      m_joinMenu(game.getWindow(), HEIGHT / 2 - 100),
-      m_createLobbyMenu(game.getWindow(), HEIGHT / 2 - 100),
-      mp_activeMenu(&m_mainMenu) {
-  m_banner.setSize({(float)WIDTH, 200});
+    : StateBase(game, "Main Menu", kWidth, kHeight),
+      m_main_menu(game.getWindow(), kHeight / 2 - 100),
+      m_join_menu(game.getWindow(), kHeight / 2 - 100),
+      m_create_lobby_menu(game.getWindow(), kHeight / 2 - 100),
+      m_active_menu_ptr(&m_main_menu) {
+  m_banner.setSize({(float)kWidth, 200});
   m_banner.setTexture(&ResourceHolder::get().m_textures.get("pong/logo"));
 
   {
@@ -25,21 +25,21 @@ PongStateMainMenu::PongStateMainMenu(Game& game)
 
     auto playBtn = makeButton();
     playBtn->setText("Create Lobby");
-    playBtn->setFunction([&]() { mp_activeMenu = &m_createLobbyMenu; });
+    playBtn->setFunction([&]() { m_active_menu_ptr = &m_create_lobby_menu; });
 
     auto joinBtn = makeButton();
     joinBtn->setText("Join Lobby");
-    joinBtn->setFunction([&]() { mp_activeMenu = &m_joinMenu; });
+    joinBtn->setFunction([&]() { m_active_menu_ptr = &m_join_menu; });
 
     auto exitBtn = makeButton();
     exitBtn->setText("Exit game");
     exitBtn->setFunction([&]() { m_game_ptr->popState(); });
 
-    m_mainMenu.addWidget(std::move(vsComputer));
-    m_mainMenu.addWidget(std::move(playBtn));
-    m_mainMenu.addWidget(std::move(joinBtn));
-    m_mainMenu.addWidget(std::move(exitBtn));
-    m_mainMenu.setTitle("Choose Action");
+    m_main_menu.addWidget(std::move(vsComputer));
+    m_main_menu.addWidget(std::move(playBtn));
+    m_main_menu.addWidget(std::move(joinBtn));
+    m_main_menu.addWidget(std::move(exitBtn));
+    m_main_menu.setTitle("Choose Action");
   }
   {
     auto nameBox = makeTextBox(m_name);
@@ -56,15 +56,15 @@ PongStateMainMenu::PongStateMainMenu(Game& game)
 
     auto backBtn = makeButton();
     backBtn->setText("Back");
-    backBtn->setFunction([&]() { mp_activeMenu = &m_mainMenu; });
+    backBtn->setFunction([&]() { m_active_menu_ptr = &m_main_menu; });
 
-    m_createLobbyMenu.setTitle("Create Lobby");
-    m_createLobbyMenu.addWidget(std::move(nameBox));
-    m_createLobbyMenu.addWidget(std::move(joinBtn));
-    m_createLobbyMenu.addWidget(std::move(backBtn));
+    m_create_lobby_menu.setTitle("Create Lobby");
+    m_create_lobby_menu.addWidget(std::move(nameBox));
+    m_create_lobby_menu.addWidget(std::move(joinBtn));
+    m_create_lobby_menu.addWidget(std::move(backBtn));
   }
   {
-    auto ipBox = makeTextBox(m_joinIp);
+    auto ipBox = makeTextBox(m_join_ip);
     ipBox->setLabel("Enter host IP Address");
 
     auto nameBox = makeTextBox(m_name);
@@ -76,23 +76,23 @@ PongStateMainMenu::PongStateMainMenu(Game& game)
       if (m_name.empty()) {
         m_name = "Guest";
       }
-      m_game_ptr->pushState<StateLobby>(*m_game_ptr, m_joinIp, m_name);
+      m_game_ptr->pushState<StateLobby>(*m_game_ptr, m_join_ip, m_name);
     });
 
     auto backBtn = makeButton();
     backBtn->setText("Back");
-    backBtn->setFunction([&]() { mp_activeMenu = &m_mainMenu; });
+    backBtn->setFunction([&]() { m_active_menu_ptr = &m_main_menu; });
 
-    m_joinMenu.setTitle("");
-    m_joinMenu.addWidget(std::move(nameBox));
-    m_joinMenu.addWidget(std::move(ipBox));
-    m_joinMenu.addWidget(std::move(joinBtn));
-    m_joinMenu.addWidget(std::move(backBtn));
+    m_join_menu.setTitle("");
+    m_join_menu.addWidget(std::move(nameBox));
+    m_join_menu.addWidget(std::move(ipBox));
+    m_join_menu.addWidget(std::move(joinBtn));
+    m_join_menu.addWidget(std::move(backBtn));
   }
 }
 
 void PongStateMainMenu::handleEvent(sf::Event e) {
-  mp_activeMenu->handleEvent(e, m_game_ptr->getWindow());
+  m_active_menu_ptr->handleEvent(e, m_game_ptr->getWindow());
 }
 
 void PongStateMainMenu::update(sf::Time deltaTime) {
@@ -100,6 +100,6 @@ void PongStateMainMenu::update(sf::Time deltaTime) {
 }
 
 void PongStateMainMenu::render(sf::RenderTarget& renderer) {
-  mp_activeMenu->render(renderer);
+  m_active_menu_ptr->render(renderer);
   renderer.draw(m_banner);
 }

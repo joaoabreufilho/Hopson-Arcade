@@ -14,18 +14,18 @@ const auto scoresPath = "res/space_invaders/scores.txt";
 StateHighscores::StateHighscores(Game& game, int score)
     : StateHighscores(game) {
   initSubmitMenu();
-  m_scoreToSubmit = score;
-  m_pActiveMenu = &m_submitScoreMenu;
+  m_score_to_submit = score;
+  m_active_menu_ptr = &m_submit_score_menu;
   m_state = State::Submitting;
 }
 
 StateHighscores::StateHighscores(Game& game)
     : StateBase(game, "Highscores"),
-      m_submitScoreMenu(game.getWindow(), 100.0f),
-      m_highscoreMenu(game.getWindow(), kInvadersHeight - 100.0f),
+      m_submit_score_menu(game.getWindow(), 100.0f),
+      m_highscore_menu(game.getWindow(), kInvadersHeight - 100.0f),
       m_state(State::Viewing) {
   initViewMenu();
-  m_pActiveMenu = &m_highscoreMenu;
+  m_active_menu_ptr = &m_highscore_menu;
   m_banner.setSize({(float)kInvaderWidth, 200});
   m_banner.setTexture(
       &ResourceHolder::get().m_textures.get("si/highscores"));
@@ -33,7 +33,7 @@ StateHighscores::StateHighscores(Game& game)
 }
 
 void StateHighscores::handleEvent(sf::Event e) {
-  m_pActiveMenu->handleEvent(e, m_game_ptr->getWindow());
+  m_active_menu_ptr->handleEvent(e, m_game_ptr->getWindow());
 }
 
 void StateHighscores::update(sf::Time deltaTime) {
@@ -42,9 +42,9 @@ void StateHighscores::update(sf::Time deltaTime) {
 
 void StateHighscores::render(sf::RenderTarget& renderer) {
   m_background.draw(renderer);
-  m_pActiveMenu->render(renderer);
+  m_active_menu_ptr->render(renderer);
   if (m_state == State::Viewing) {
-    for (auto& entry : m_entryBoxes) {
+    for (auto& entry : m_entry_boxes) {
       entry.draw(renderer);
     }
     renderer.draw(m_banner);
@@ -69,17 +69,17 @@ void StateHighscores::initViewMenu() {
   auto backBtn = makeButton();
   backBtn->setText("Main Menu");
   backBtn->setFunction([&]() { m_game_ptr->popState(); });
-  m_highscoreMenu.addWidget(std::move(backBtn));
+  m_highscore_menu.addWidget(std::move(backBtn));
 }
 
 void StateHighscores::initSubmitMenu() {
-  auto nameTextBox = makeTextBox(m_submitString);
+  auto nameTextBox = makeTextBox(m_submit_string);
   nameTextBox->setLabel("Click text box to enter name");
 
   auto submitBtn = makeButton();
   submitBtn->setText("Submit Score");
   submitBtn->setFunction([&]() {
-    if (!m_submitString.empty()) {
+    if (!m_submit_string.empty()) {
       submitScore();
       switchToViewMenu();
     }
@@ -92,26 +92,26 @@ void StateHighscores::initSubmitMenu() {
     switchToViewMenu();
   });
 
-  m_submitScoreMenu.addWidget(std::move(nameTextBox));
-  m_submitScoreMenu.addWidget(std::move(submitBtn));
-  m_submitScoreMenu.addWidget(std::move(backBtn));
+  m_submit_score_menu.addWidget(std::move(nameTextBox));
+  m_submit_score_menu.addWidget(std::move(submitBtn));
+  m_submit_score_menu.addWidget(std::move(backBtn));
 }
 
 void StateHighscores::switchToViewMenu() {
   m_state = State::Viewing;
-  m_pActiveMenu = &m_highscoreMenu;
+  m_active_menu_ptr = &m_highscore_menu;
   createHighscoreView();
 }
 
 void StateHighscores::createHighscoreView() {
   loadScores();
   sortScores();
-  m_entryBoxes.clear();
+  m_entry_boxes.clear();
   for (unsigned i = 0; i < m_scores.size(); i++) {
     auto& name = m_scores[i].first;
     auto score = m_scores[i].second;
 
-    m_entryBoxes.emplace_back(i + 1, name, score);
+    m_entry_boxes.emplace_back(i + 1, name, score);
     if (i >= 9)
       return;  // Only show top 10 scores
   }
@@ -150,7 +150,7 @@ void StateHighscores::sortScores() {
 
 void StateHighscores::submitScore() {
   loadScores();
-  m_scores.emplace_back(std::make_pair(m_submitString, m_scoreToSubmit));
+  m_scores.emplace_back(std::make_pair(m_submit_string, m_score_to_submit));
   writeScores();
 }
 
@@ -163,16 +163,16 @@ StateHighscores::EntryBox::EntryBox(int position,
   m_background.setPosition(
       {kInvaderWidth / 2 - m_background.getGlobalBounds().width / 2, y});
 
-  m_nameText.setCharacterSize((unsigned)size - 5);
-  m_scoreText.setCharacterSize((unsigned)size - 5);
+  m_name_text.setCharacterSize((unsigned)size - 5);
+  m_score_text.setCharacterSize((unsigned)size - 5);
 
-  m_nameText.setString(std::to_string(position) + "     " + name);
-  m_scoreText.setString(std::to_string(score));
+  m_name_text.setString(std::to_string(position) + "     " + name);
+  m_score_text.setString(std::to_string(score));
 
-  m_nameText.setPosition(m_background.getPosition());
-  m_scoreText.setPosition(m_background.getPosition().x +
+  m_name_text.setPosition(m_background.getPosition());
+  m_score_text.setPosition(m_background.getPosition().x +
                               m_background.getGlobalBounds().width -
-                              m_scoreText.getGlobalBounds().width - 10,
+                              m_score_text.getGlobalBounds().width - 10,
                           y);
 
   m_background.setOutlineThickness(2);
@@ -183,6 +183,6 @@ StateHighscores::EntryBox::EntryBox(int position,
 
 void StateHighscores::EntryBox::draw(sf::RenderTarget& renderer) {
   renderer.draw(m_background);
-  renderer.draw(m_nameText);
-  renderer.draw(m_scoreText);
+  renderer.draw(m_name_text);
+  renderer.draw(m_score_text);
 }

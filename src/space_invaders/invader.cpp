@@ -1,7 +1,7 @@
 #include "invader.h"
 
 Invader::Invader(const sf::Vector2f& initialLocation, Type type)
-    : Collidable(WIDTH, HEIGHT),
+    : Collidable(kWidth, kHeight),
       m_initialPosition(initialLocation),
       m_location(initialLocation),
       m_type(type) {}
