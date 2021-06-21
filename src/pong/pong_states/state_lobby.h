@@ -1,3 +1,21 @@
+/*
+ * Used for Documentation and Educational Purposes.
+ * Public Description: This is a collection of small aracde-y games, created
+ * using C++17 and SFML
+ *
+ * Hopson-Arcade {https://github.com/Hopson97}
+ * GPL License
+ */
+/**
+ * @file state_lobby.h
+ * @brief Pong lobby state handler.
+ *
+ * - \subpage Subsystem: Pong Server
+ *
+ * \date Jun 2021
+ */
+/** @addtogroup pong_states */
+/** @{ */
 #pragma once
 
 #include "net.h"
@@ -8,12 +26,14 @@
 class Widget;
 class Label;
 
+/**
+ * @class StateLobby
+ * @brief Lobby input and state handler.
+ */
 class StateLobby : public StateBase {
  public:
   StateLobby(Game& game, const std::string& name);
-  StateLobby(Game& game,
-             const std::string& ip,
-             const std::string& name);
+  StateLobby(Game& game, const std::string& ip, const std::string& name);
 
   void handleEvent(sf::Event e) override;
   void handleInput() override{};
@@ -48,3 +68,4 @@ class StateLobby : public StateBase {
 
   int m_peerConnections = 0;
 };
+/** @} */

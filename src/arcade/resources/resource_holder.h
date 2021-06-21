@@ -7,6 +7,7 @@
  * GPL License
  */
 /**
+ * @file resource_holder.h
  * @brief Resource buffering handler.
  *
  * - \subpage Subsystem: Arcade Resources
