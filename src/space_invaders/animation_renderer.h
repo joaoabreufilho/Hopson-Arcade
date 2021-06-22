@@ -27,11 +27,11 @@
  */
 class AnimationRenderer {
  public:
-  AnimationRenderer(int frameWidth,
-                    int frameHeight,
-                    float entityWidth,
-                    float entityHeight,
-                    const sf::Texture& spriteSheet);
+  AnimationRenderer(int frame_width,
+                    int frame_height,
+                    float entity_width,
+                    float entity_height,
+                    const sf::Texture& sprite_sheet);
 
   // Changes to the next frame
   void nextFrame();
@@ -43,8 +43,8 @@ class AnimationRenderer {
 
  private:
   sf::RectangleShape m_entity;
-  int m_currentFrame;
-  const int m_frameWidth;
-  const int m_frameHeight;
+  int m_current_frame;
+  const int m_frame_width;
+  const int m_frame_height;
 };
 /** @} */

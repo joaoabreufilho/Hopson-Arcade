@@ -1,28 +1,28 @@
 #include "animation_renderer.h"
 
-AnimationRenderer::AnimationRenderer(int frameWidth,
-                                     int frameHeight,
-                                     float entityWidth,
-                                     float entityHeight,
-                                     const sf::Texture& spriteSheet)
-    : m_frameWidth(frameWidth), m_frameHeight(frameHeight) {
-  m_entity.setSize({entityWidth, entityHeight});
-  m_entity.setTexture(&spriteSheet);
+AnimationRenderer::AnimationRenderer(int frame_width,
+                                     int frame_height,
+                                     float entity_width,
+                                     float entity_height,
+                                     const sf::Texture& sprite_sheet)
+    : m_frame_width(frame_width), m_frame_height(frame_height) {
+  m_entity.setSize({entity_width, entity_height});
+  m_entity.setTexture(&sprite_sheet);
 }
 
 void AnimationRenderer::nextFrame() {
-  m_currentFrame++;
+  m_current_frame++;
 }
 
 void AnimationRenderer::renderEntity(sf::RenderTarget& renderer,
                                      int type,
                                      const sf::Vector2f& position) {
   // Calculate texture coords
-  int texLeft = (m_currentFrame % 2) * m_frameWidth;
-  int texTop = (type * m_frameHeight);
+  int texLeft = (m_current_frame % 2) * m_frame_width;
+  int texTop = (type * m_frame_height);
 
   // Reposition and draw sprite
   m_entity.setPosition(position);
-  m_entity.setTextureRect({texLeft, texTop, m_frameWidth, m_frameHeight});
+  m_entity.setTextureRect({texLeft, texTop, m_frame_width, m_frame_height});
   renderer.draw(m_entity);
 }
