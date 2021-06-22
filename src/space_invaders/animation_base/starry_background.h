@@ -18,8 +18,9 @@
 /** @{ */
 #pragma once
 
-#include <random.h>
 #include <SFML/Graphics.hpp>
+
+#include "random.h"
 
 /**
  * @class StarryBackground

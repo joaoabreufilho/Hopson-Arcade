@@ -33,7 +33,7 @@ class Explosion {
 
  private:
   sf::Vector2f m_position;      // The position of the explosion
-  sf::Clock m_lifetimeCounter;  // Clock for checking if the explosion is
+  sf::Clock m_lifetime_counter;  // Clock for checking if the explosion is
                                 // outlived
 };
 /** @} */
