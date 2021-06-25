@@ -4,16 +4,16 @@
 
 constexpr float kBaseY = 95.0f;
 
-StackMenu::StackMenu(const sf::RenderWindow& window, float baseY, int width)
-    : m_base_position((float)window.getSize().x / 2.0f, baseY),
+StackMenu::StackMenu(const sf::RenderWindow& window, float base_y, int width)
+    : m_base_position((float)window.getSize().x / 2.0f, base_y),
       m_base_size(width, 20) {
   m_background.setOutlineThickness(2);
   m_background.setOutlineColor(sf::Color::Green);
   m_background.setFillColor({100, 100, 100, 230});
   m_background.setSize(m_base_size);
-  m_background.setPosition(m_base_position.x - m_base_size.x / 2, baseY - 30);
+  m_background.setPosition(m_base_position.x - m_base_size.x / 2, base_y - 30);
 
-  m_title_text.setPosition(0, baseY - 35);
+  m_title_text.setPosition(0, base_y - 35);
   m_title_text.setOutlineColor(sf::Color::Black);
   m_title_text.setOutlineThickness(1);
   m_title_text.setCharacterSize(30);

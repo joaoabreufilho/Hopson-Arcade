@@ -93,7 +93,7 @@ class Game : public NonCopyable, public NonMovable {
   sf::RenderWindow m_window;
   std::vector<std::unique_ptr<StateBase>> m_states;
 
-  FPSCounter counter;
+  FPSCounter m_counter;
 
   Action m_action;
 };

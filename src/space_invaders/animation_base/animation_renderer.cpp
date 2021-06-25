@@ -18,11 +18,11 @@ void AnimationRenderer::renderEntity(sf::RenderTarget& renderer,
                                      int type,
                                      const sf::Vector2f& position) {
   // Calculate texture coords
-  int texLeft = (m_current_frame % 2) * m_frame_width;
-  int texTop = (type * m_frame_height);
+  int tex_left = (m_current_frame % 2) * m_frame_width;
+  int tex_top = (type * m_frame_height);
 
   // Reposition and draw sprite
   m_entity.setPosition(position);
-  m_entity.setTextureRect({texLeft, texTop, m_frame_width, m_frame_height});
+  m_entity.setTextureRect({tex_left, tex_top, m_frame_width, m_frame_height});
   renderer.draw(m_entity);
 }

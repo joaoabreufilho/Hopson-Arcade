@@ -13,7 +13,6 @@ FPSCounter::FPSCounter() {
   m_text.setCharacterSize(15);
 }
 
-// updates the FPS variable
 void FPSCounter::update() {
   m_frame_count++;
 
@@ -24,7 +23,6 @@ void FPSCounter::update() {
   }
 }
 
-// Draws the FPS display to the window
 void FPSCounter::draw(sf::RenderTarget& renderer) {
   m_text.setString("FPS " + std::to_string((int)m_fps));
   renderer.draw(m_text);

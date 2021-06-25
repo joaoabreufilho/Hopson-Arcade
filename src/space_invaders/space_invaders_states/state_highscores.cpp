@@ -52,11 +52,11 @@ void StateHighscores::render(sf::RenderTarget& renderer) {
 }
 
 int StateHighscores::getHighestScore() {
-  std::ifstream inFile(kScoresPath);
+  std::ifstream in_file(kScoresPath);
   std::string buffer;
 
-  std::getline(inFile, buffer, ',');
-  std::getline(inFile, buffer, ',');
+  std::getline(in_file, buffer, ',');
+  std::getline(in_file, buffer, ',');
   if (buffer.empty())
     return 0;
   else
@@ -66,35 +66,35 @@ int StateHighscores::getHighestScore() {
 void StateHighscores::initViewMenu() {
   loadScores();
 
-  auto backBtn = makeButton();
-  backBtn->setText("Main Menu");
-  backBtn->setFunction([&]() { m_game_ptr->popState(); });
-  m_highscore_menu.addWidget(std::move(backBtn));
+  auto back_btn_ptr = makeButton();
+  back_btn_ptr->setText("Main Menu");
+  back_btn_ptr->setFunction([&]() { m_game_ptr->popState(); });
+  m_highscore_menu.addWidget(std::move(back_btn_ptr));
 }
 
 void StateHighscores::initSubmitMenu() {
-  auto nameTextBox = makeTextBox(m_submit_string);
-  nameTextBox->setLabel("Click text box to enter name");
+  auto name_text_box_ptr = makeTextBox(m_submit_string);
+  name_text_box_ptr->setLabel("Click text box to enter name");
 
-  auto submitBtn = makeButton();
-  submitBtn->setText("Submit Score");
-  submitBtn->setFunction([&]() {
+  auto submit_btn_ptr = makeButton();
+  submit_btn_ptr->setText("Submit Score");
+  submit_btn_ptr->setFunction([&]() {
     if (!m_submit_string.empty()) {
       submitScore();
       switchToViewMenu();
     }
   });
 
-  auto backBtn = makeButton();
-  backBtn->setText("View HighScores");
-  backBtn->setFunction([&]() {
+  auto back_btn_ptr = makeButton();
+  back_btn_ptr->setText("View HighScores");
+  back_btn_ptr->setFunction([&]() {
     loadScores();
     switchToViewMenu();
   });
 
-  m_submit_score_menu.addWidget(std::move(nameTextBox));
-  m_submit_score_menu.addWidget(std::move(submitBtn));
-  m_submit_score_menu.addWidget(std::move(backBtn));
+  m_submit_score_menu.addWidget(std::move(name_text_box_ptr));
+  m_submit_score_menu.addWidget(std::move(submit_btn_ptr));
+  m_submit_score_menu.addWidget(std::move(back_btn_ptr));
 }
 
 void StateHighscores::switchToViewMenu() {
@@ -119,12 +119,12 @@ void StateHighscores::createHighscoreView() {
 
 void StateHighscores::loadScores() {
   m_scores.clear();
-  std::ifstream inFile(kScoresPath);
+  std::ifstream in_file(kScoresPath);
   std::string line;
   int switcher = 0;
   std::string name;
   int score;
-  while (std::getline(inFile, line, ',')) {
+  while (std::getline(in_file, line, ',')) {
     if (switcher++ % 2 == 0) {
       name = line;
     } else {
@@ -137,9 +137,9 @@ void StateHighscores::loadScores() {
 
 void StateHighscores::writeScores() {
   sortScores();
-  std::ofstream outFile(kScoresPath);
+  std::ofstream out_file(kScoresPath);
   for (auto& entry : m_scores) {
-    outFile << entry.first << "," << entry.second << ",";
+    out_file << entry.first << "," << entry.second << ",";
   }
 }
 

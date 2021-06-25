@@ -37,16 +37,31 @@ class Animation {
 
   Animation(unsigned frame_width, unsigned frame_height);
 
+  /**
+   * @brief Adds a frame...
+   */
   void addFrame(unsigned index, sf::Time delay);
 
+  /**
+   * @brief Returns the current/active frame of the animation
+   */
   const sf::IntRect& getFrame();
 
  private:
-  sf::Clock m_timer;  // Timer for progressing the animation
+  /**
+   * @brief Timer for progressing the animation
+   */
+  sf::Clock m_timer;
 
-  std::vector<Frame> m_frames;  // List of animation frames
+  /**
+   * @brief List of animation frames
+   */
+  std::vector<Frame> m_frames;
 
-  unsigned m_frame_ptr = 0;  // The index of the current active frame
+  /**
+   * @brief  The index of the current active frame
+   */
+  unsigned m_frame_ptr = 0;
   const unsigned kFrameWidth;
   const unsigned kFrameHeight;
 };

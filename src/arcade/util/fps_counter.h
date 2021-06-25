@@ -27,8 +27,10 @@ class FPSCounter {
  public:
   FPSCounter();
 
+  /// @brief Updates the FPS variable
   void update();
 
+  /// @brief Draws the FPS display to the window
   void draw(sf::RenderTarget& renderer);
 
  private:

@@ -13,7 +13,7 @@ Game::Game() : m_window({1, 1}, "Hopson Arcade") {
 
 void Game::run() {
   constexpr unsigned kTps = 30;  // ticks per seconds
-  const sf::Time timePerUpdate = sf::seconds(1.0f / float(kTps));
+  const sf::Time kTimePerUpdate = sf::seconds(1.0f / float(kTps));
   unsigned ticks = 0;
 
   sf::Clock timer;
@@ -33,19 +33,19 @@ void Game::run() {
     // Real time update
     state.handleInput();
     state.update(elapsed);
-    counter.update();
+    m_counter.update();
 
     // Fixed time update
-    while (lag >= timePerUpdate) {
+    while (lag >= kTimePerUpdate) {
       ticks++;
-      lag -= timePerUpdate;
+      lag -= kTimePerUpdate;
       state.fixedUpdate(elapsed);
     }
 
     // Render
     m_window.clear();
     state.render(m_window);
-    counter.draw(m_window);
+    m_counter.draw(m_window);
     m_window.display();
 
     // Handle window events
