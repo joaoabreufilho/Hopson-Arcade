@@ -78,8 +78,8 @@ class StatePlaying : public StateBase {
 
     Widget::Text m_label;
     std::string m_text;
-    int m_currentScore;
-    float m_centerPosition;
+    int m_current_score;
+    float m_center_position;
   } m_score_display, m_highest_score_display;
 };
 /** @} */

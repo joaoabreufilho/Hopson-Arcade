@@ -137,7 +137,7 @@ CollisionResult World::getCollisionResult(float dt) {
 }
 
 void World::updateProjectiles(float dt,
-                              std::vector<sf::Vector2f>& collisionPoints) {
+                              std::vector<sf::Vector2f>& collision_points) {
   for (auto itr = m_projectiles.begin(); itr != m_projectiles.end();) {
     auto& projectile = *itr;
     if (!projectile.isActive()) {
@@ -145,7 +145,7 @@ void World::updateProjectiles(float dt,
     } else {
       // Test for player getting hit
       if (projectile.tryCollideWith(m_player)) {
-        collisionPoints.emplace_back(m_player.getGunPosition());
+        collision_points.emplace_back(m_player.getGunPosition());
         m_projectiles.clear();
         return;
       }

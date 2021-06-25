@@ -2,7 +2,7 @@
 
 Invader::Invader(const sf::Vector2f& initialLocation, Type type)
     : Collidable(kWidth, kHeight),
-      m_initialPosition(initialLocation),
+      m_initial_position(initialLocation),
       m_location(initialLocation),
       m_type(type) {}
 
@@ -15,7 +15,7 @@ const sf::Vector2f& Invader::getPosition() const {
 }
 
 bool Invader::isAlive() const {
-  return m_isAlive;
+  return m_is_alive;
 }
 
 Invader::Type Invader::getType() const {
@@ -23,5 +23,5 @@ Invader::Type Invader::getType() const {
 }
 
 void Invader::onCollide([[maybe_unused]] Collidable& other) {
-  m_isAlive = false;
+  m_is_alive = false;
 }

@@ -7,8 +7,8 @@ StateBase::StateBase(Game& game, const char* name)
 
 StateBase::StateBase(Game& game,
                      const char* name,
-                     unsigned resizeWindowWidth,
-                     unsigned resizeWindowHeight)
+                     unsigned resize_window_width,
+                     unsigned resize_window_height)
     : m_game_ptr(&game), m_name(name) {
-  m_game_ptr->resizeWindow(resizeWindowWidth, resizeWindowHeight);
+  m_game_ptr->resizeWindow(resize_window_width, resize_window_height);
 }

@@ -11,14 +11,13 @@ Game::Game() : m_window({1, 1}, "Hopson Arcade") {
   m_window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 }
 
-// Runs the main loop
 void Game::run() {
-  constexpr unsigned TPS = 30;  // ticks per seconds
-  const sf::Time timePerUpdate = sf::seconds(1.0f / float(TPS));
+  constexpr unsigned kTps = 30;  // ticks per seconds
+  const sf::Time timePerUpdate = sf::seconds(1.0f / float(kTps));
   unsigned ticks = 0;
 
   sf::Clock timer;
-  auto lastTime = sf::Time::Zero;
+  auto last_time = sf::Time::Zero;
   auto lag = sf::Time::Zero;
 
   // Main loop of the game
@@ -27,8 +26,8 @@ void Game::run() {
 
     // Get times
     auto time = timer.getElapsedTime();
-    auto elapsed = time - lastTime;
-    lastTime = time;
+    auto elapsed = time - last_time;
+    last_time = time;
     lag += elapsed;
 
     // Real time update
@@ -55,7 +54,6 @@ void Game::run() {
   }
 }
 
-// Tries to pop the current game state
 void Game::updateStates() {
   switch (m_action.type) {
     case Action::Type::kPush:
@@ -86,7 +84,6 @@ void Game::updateStates() {
   }
 }
 
-// Handles window events, called every frame
 void Game::handleEvent() {
   sf::Event e;
 
@@ -103,7 +100,6 @@ void Game::handleEvent() {
   }
 }
 
-// Returns a reference to the current game state
 StateBase& Game::getCurrentState() {
   return *m_states.back();
 }
@@ -113,7 +109,6 @@ void Game::pushState(std::unique_ptr<StateBase> state) {
   getCurrentState().onOpen();
 }
 
-// Flags a boolean for the game to pop state
 void Game::popState() {
   m_action.type = Action::Type::kPop;
 }
@@ -122,7 +117,6 @@ void Game::exitGame() {
   m_action.type = Action::Type::kQuit;
 }
 
-// on tin
 const sf::RenderWindow& Game::getWindow() const {
   return m_window;
 }

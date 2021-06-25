@@ -10,23 +10,23 @@ StatePlaying::StatePlaying(Game& game)
       m_game_over_menu(game.getWindow(), kInvadersHeight / 3),
       m_score_display(kInvaderWidth / 8, "Score"),
       m_highest_score_display(kInvaderWidth / 2, "HighScore") {
-  auto mmButton = std::make_unique<Button>();
-  mmButton->setText("Main Menu\n");
-  mmButton->setFunction([&]() { m_game_ptr->popState(); });
+  auto button_mm_ptr = std::make_unique<Button>();
+  button_mm_ptr->setText("Main Menu\n");
+  button_mm_ptr->setFunction([&]() { m_game_ptr->popState(); });
 
-  auto submitBtn = std::make_unique<Button>();
-  submitBtn->setText("Submit Score");
-  submitBtn->setFunction(
+  auto btn_submit_ptr = std::make_unique<Button>();
+  btn_submit_ptr->setText("Submit Score");
+  btn_submit_ptr->setFunction(
       [&]() { m_game_ptr->changeState<StateHighscores>(*m_game_ptr, m_score); });
 
-  auto exitButton = std::make_unique<Button>();
-  exitButton->setText("Exit game\n");
-  exitButton->setFunction([&]() { m_game_ptr->exitGame(); });
+  auto button_exit_ptr = std::make_unique<Button>();
+  button_exit_ptr->setText("Exit game\n");
+  button_exit_ptr->setFunction([&]() { m_game_ptr->exitGame(); });
 
   m_game_over_menu.setTitle("GAME  OVER");
-  m_game_over_menu.addWidget(std::move(mmButton));
-  m_game_over_menu.addWidget(std::move(submitBtn));
-  m_game_over_menu.addWidget(std::move(exitButton));
+  m_game_over_menu.addWidget(std::move(button_mm_ptr));
+  m_game_over_menu.addWidget(std::move(btn_submit_ptr));
+  m_game_over_menu.addWidget(std::move(button_exit_ptr));
 
   m_highest_score_display.update(StateHighscores::getHighestScore());
 }
@@ -41,9 +41,9 @@ void StatePlaying::handleInput() {
   m_world.input();
 }
 
-void StatePlaying::update(sf::Time deltaTime) {
+void StatePlaying::update(sf::Time delta_time) {
   if (!m_is_gameover) {
-    m_score += m_world.update(deltaTime.asSeconds());
+    m_score += m_world.update(delta_time.asSeconds());
     m_score_display.update(m_score);
 
     if (m_score > m_highest_score_display.getCurrentScoreDisplayed()) {
@@ -91,13 +91,13 @@ void StatePlaying::LifeDisplay::draw(sf::RenderTarget& window, int lives) {
 }
 
 StatePlaying::ScoreDisplay::ScoreDisplay(float x, const std::string& text)
-    : m_text(text), m_centerPosition(x) {
+    : m_text(text), m_center_position(x) {
   updateDisplay();
   m_label.setOutlineThickness(0);
 }
 
 void StatePlaying::ScoreDisplay::update(int newScore) {
-  m_currentScore = newScore;
+  m_current_score = newScore;
   updateDisplay();
 }
 
@@ -106,11 +106,11 @@ void StatePlaying::ScoreDisplay::draw(sf::RenderTarget& target) {
 }
 
 int StatePlaying::ScoreDisplay::getCurrentScoreDisplayed() const {
-  return m_currentScore;
+  return m_current_score;
 }
 
 void StatePlaying::ScoreDisplay::updateDisplay() {
-  m_label.setString(m_text + "   " + std::to_string(m_currentScore));
-  m_label.setPosition(m_centerPosition - m_label.getGlobalBounds().width / 2,
+  m_label.setString(m_text + "   " + std::to_string(m_current_score));
+  m_label.setPosition(m_center_position - m_label.getGlobalBounds().width / 2,
                       15);
 }

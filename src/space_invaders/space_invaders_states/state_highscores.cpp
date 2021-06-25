@@ -9,7 +9,7 @@
 #include <iostream>
 #include <sstream>
 
-const auto scoresPath = "res/space_invaders/scores.txt";
+const auto kScoresPath = "res/space_invaders/scores.txt";
 
 StateHighscores::StateHighscores(Game& game, int score)
     : StateHighscores(game) {
@@ -52,7 +52,7 @@ void StateHighscores::render(sf::RenderTarget& renderer) {
 }
 
 int StateHighscores::getHighestScore() {
-  std::ifstream inFile(scoresPath);
+  std::ifstream inFile(kScoresPath);
   std::string buffer;
 
   std::getline(inFile, buffer, ',');
@@ -119,7 +119,7 @@ void StateHighscores::createHighscoreView() {
 
 void StateHighscores::loadScores() {
   m_scores.clear();
-  std::ifstream inFile(scoresPath);
+  std::ifstream inFile(kScoresPath);
   std::string line;
   int switcher = 0;
   std::string name;
@@ -137,7 +137,7 @@ void StateHighscores::loadScores() {
 
 void StateHighscores::writeScores() {
   sortScores();
-  std::ofstream outFile(scoresPath);
+  std::ofstream outFile(kScoresPath);
   for (auto& entry : m_scores) {
     outFile << entry.first << "," << entry.second << ",";
   }

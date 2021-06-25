@@ -15,11 +15,11 @@ FPSCounter::FPSCounter() {
 
 // updates the FPS variable
 void FPSCounter::update() {
-  m_frameCount++;
+  m_frame_count++;
 
   if (m_delay_timer.getElapsedTime().asSeconds() > 0.2) {
-    m_fps = m_frameCount / m_fpsTimer.restart().asSeconds();
-    m_frameCount = 0;
+    m_fps = m_frame_count / m_fps_timer.restart().asSeconds();
+    m_frame_count = 0;
     m_delay_timer.restart();
   }
 }

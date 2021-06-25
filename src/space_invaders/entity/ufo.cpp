@@ -5,12 +5,12 @@
 
 constexpr float kWidth = 72;
 constexpr float kHeight = 36;
-constexpr float Y_POS = 45;
+constexpr float kYPos = 45;
 
 UFO::UFO(Random<>& rand)
     : Collidable(kWidth, kHeight), m_rng(rand), m_animation(16, 8) {
   m_sprite.setSize({kWidth, kHeight});
-  m_sprite.setPosition((float)kInvaderWidth, Y_POS);
+  m_sprite.setPosition((float)kInvaderWidth, kYPos);
   m_sprite.setTexture(&ResourceHolder::get().m_textures.get("si/ufo"));
 
   for (int i = 0; i < 3; i++) {
@@ -54,7 +54,7 @@ void UFO::update(float dt) {
         } else {
           xPos = kInvaderWidth;
         }
-        m_sprite.setPosition(xPos, Y_POS);
+        m_sprite.setPosition(xPos, kYPos);
       }
       break;
   }

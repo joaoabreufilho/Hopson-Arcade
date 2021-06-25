@@ -48,12 +48,18 @@ class Game : public NonCopyable, public NonMovable {
  public:
   Game();
 
+  /**
+   * @brief Runs the main loop
+   */
   void run();
 
   template <typename T>
   void initGame();
 
   void pushState(std::unique_ptr<StateBase> state);
+  /**
+   * @brief Flags a boolean for the game to pop state
+   */
   void popState();
   void exitGame();
 
@@ -63,14 +69,25 @@ class Game : public NonCopyable, public NonMovable {
   template <typename T, typename... Args>
   void changeState(Args&&... args);
 
+  /**
+   * @brief On tin.
+   */
   const sf::RenderWindow& getWindow() const;
 
   void resizeWindow(unsigned width, unsigned height);
 
  private:
+  /**
+   * @brief Handles window events, called every frame.
+   */
   void handleEvent();
+  /**
+   * @brief Tries to pop the current game state.
+   */
   void updateStates();
-
+  /**
+   * @brief Returns a reference to the current game state.
+   */
   StateBase& getCurrentState();
 
   sf::RenderWindow m_window;

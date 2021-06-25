@@ -12,22 +12,22 @@ StateMainMenu::StateMainMenu(Game& game)
   m_banner.setSize({(float)kInvaderWidth, 200});
   m_banner.setTexture(&ResourceHolder::get().m_textures.get("si/logo"));
 
-  auto playBtn = makeButton();
-  playBtn->setText("Play game");
-  playBtn->setFunction([&]() { m_game_ptr->pushState<StatePlaying>(*m_game_ptr); });
+  auto play_btn_ptr = makeButton();
+  play_btn_ptr->setText("Play game");
+  play_btn_ptr->setFunction([&]() { m_game_ptr->pushState<StatePlaying>(*m_game_ptr); });
 
-  auto highscoresBtn = makeButton();
-  highscoresBtn->setText("Highscores");
-  highscoresBtn->setFunction(
+  auto high_scores_btn_ptr = makeButton();
+  high_scores_btn_ptr->setText("Highscores");
+  high_scores_btn_ptr->setFunction(
       [&]() { m_game_ptr->pushState<StateHighscores>(*m_game_ptr); });
 
-  auto exitBtn = makeButton();
-  exitBtn->setText("Exit game");
-  exitBtn->setFunction([&]() { m_game_ptr->popState(); });
+  auto exit_btn_ptr = makeButton();
+  exit_btn_ptr->setText("Exit game");
+  exit_btn_ptr->setFunction([&]() { m_game_ptr->popState(); });
 
-  m_main_menu.addWidget(std::move(playBtn));
-  m_main_menu.addWidget(std::move(highscoresBtn));
-  m_main_menu.addWidget(std::move(exitBtn));
+  m_main_menu.addWidget(std::move(play_btn_ptr));
+  m_main_menu.addWidget(std::move(high_scores_btn_ptr));
+  m_main_menu.addWidget(std::move(exit_btn_ptr));
   m_main_menu.setTitle("Choose Action");
 }
 

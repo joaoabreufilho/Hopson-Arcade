@@ -36,10 +36,10 @@ class FPSCounter {
   sf::Font m_font;
 
   sf::Clock m_delay_timer;
-  sf::Clock m_fpsTimer;
+  sf::Clock m_fps_timer;
 
   float m_fps = 0;
 
-  int m_frameCount = 0;
+  int m_frame_count = 0;
 };
 /** @} */

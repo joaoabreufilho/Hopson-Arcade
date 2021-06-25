@@ -56,13 +56,13 @@ class Player : public Collidable {
   void restart();
 
   sf::RectangleShape m_sprite;
-  Animation m_deathAnimation;
+  Animation m_death_animation;
   sf::Vector2f m_velocity;
-  sf::Clock m_deathTimer;
+  sf::Clock m_death_timer;
 
-  bool m_isAlive = true;
-  int m_livesLeft = 3;
+  bool m_is_alive = true;
+  int m_lives_left = 3;
 
-  sf::Sound m_deathSound;
+  sf::Sound m_death_sound;
 };
 /** @} */

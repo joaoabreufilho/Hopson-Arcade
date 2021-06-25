@@ -45,14 +45,14 @@ class Invader : public Collidable {
   void onCollide(Collidable& other) override;
 
   void makeAlive() {
-    m_isAlive = true;
-    m_location = m_initialPosition;
+    m_is_alive = true;
+    m_location = m_initial_position;
   }
 
  private:
-  const sf::Vector2f m_initialPosition;
+  const sf::Vector2f m_initial_position;
   sf::Vector2f m_location;
-  bool m_isAlive = false;
+  bool m_is_alive = false;
   Type m_type;
 
  public:

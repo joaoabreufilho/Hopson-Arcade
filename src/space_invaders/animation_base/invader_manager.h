@@ -114,24 +114,24 @@ class InvaderManager {
   bool testInvaderPosition(const Invader& invader) const;
 
   std::vector<Invader> m_invaders;
-  sf::Clock m_stepTimer;
-  sf::Time m_stepGap;
+  sf::Clock m_step_timer;
+  sf::Time m_step_gap;
 
   World& m_world;
 
-  AnimationRenderer m_invaderRenderer;
-  unsigned m_aliveInvaders = 0;
+  AnimationRenderer m_invader_renderer;
+  unsigned m_alive_invaders = 0;
 
-  bool m_hasAllInvadersBeenAdded = false;
+  bool m_has_all_invaders_been_added = false;
 
-  bool m_isMovingLeft = false;
-  bool m_moveDown = false;
+  bool m_is_moving_left = false;
+  bool m_move_down = false;
 
-  int m_initX = 0;
-  int m_initY = 4;
+  int m_init_x = 0;
+  int m_init_y = 4;
   int m_ticks = 0;
 
-  sf::Sound m_stepSounds[4];
-  sf::Sound m_invaderKilledSound;
+  sf::Sound m_step_sounds[4];
+  sf::Sound m_invader_killed_sound;
 };
 /** @} */
